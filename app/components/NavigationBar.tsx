@@ -4,8 +4,11 @@ import {usePathname} from "next/navigation";
 import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react";
 
 
+
 export default function NavigationBar() {
   const path = usePathname();
+
+  const linkPrefix = process.env.LINK_PREFIX;
 
   return (
     <Navbar>
@@ -14,13 +17,13 @@ export default function NavigationBar() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive={path == "/"}>
-          <Link href="/">
-
+          <Link href={`${linkPrefix}/`}>
+            Главная
           </Link>
         </NavbarItem>
         <NavbarItem isActive={path == "/orders"}>
-          <Link href="/orders" aria-current="page">
-            {path}
+          <Link href={`${linkPrefix}/orders`} aria-current="page">
+            Заказы
           </Link>
         </NavbarItem>
         {/*<NavbarItem>*/}
@@ -31,7 +34,7 @@ export default function NavigationBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem isActive={path == "/login"} className="hidden lg:flex">
-          <Link href="/login">Вход</Link>
+          <Link href={`${linkPrefix}/login`}>Вход</Link>
         </NavbarItem>
         <NavbarItem isActive={path == "/register"}>
           <Button as={Link} color="primary" href="#" variant="flat">

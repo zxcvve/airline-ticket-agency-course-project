@@ -4,6 +4,9 @@
 #
 name: Deploy Next.js site to Pages
 
+env:
+  LINK_PREFIX: airline-ticket-agency-course-project
+
 on:
   # Runs on pushes targeting the default branch
   push:
