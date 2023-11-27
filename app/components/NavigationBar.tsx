@@ -16,7 +16,7 @@ export default function NavigationBar() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive={path == "/"}>
-          <Link href={`${indexPath}`}>
+          <Link href={`/`}>
             Главная
           </Link>
         </NavbarItem>
