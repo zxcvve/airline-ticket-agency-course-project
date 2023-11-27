@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "WATCHPACK_POLLING=true next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,7 +11,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
     "framer-motion": "^10.16.4",
-    "next": "14.0.2",
+    "next": "^14.0.3",
     "react": "^18",
     "react-dom": "^18"
   },
