@@ -7,7 +7,7 @@ import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nex
 export default function NavigationBar() {
   const path = usePathname();
   
-  const indexPath = "airline-ticket-agency-course-project";
+  const indexPath = "https://zxcvve.github.io/airline-ticket-agency-course-project/";
 
   return (
     <Navbar>
@@ -16,7 +16,7 @@ export default function NavigationBar() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive={path == "/"}>
-          <Link href={`/`}>
+          <Link href={indexPath}>
             Главная
           </Link>
         </NavbarItem>
