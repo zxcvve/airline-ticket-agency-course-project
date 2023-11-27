@@ -8,7 +8,7 @@ import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nex
 export default function NavigationBar() {
   const path = usePathname();
 
-  const linkPrefix = process.env.LINK_PREFIX;
+  const linkPrefix = "airline-ticket-agency-course-project";
 
   return (
     <Navbar>
