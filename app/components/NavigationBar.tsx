@@ -15,12 +15,12 @@ export default function NavigationBar() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive={path == "/"}>
           <Link href="/">
-
+            Главная
           </Link>
         </NavbarItem>
         <NavbarItem isActive={path == "/orders"}>
-          <Link href="/orders" aria-current="page">
-            {path}
+          <Link href="orders" aria-current="page">
+            Заказы
           </Link>
         </NavbarItem>
         {/*<NavbarItem>*/}
@@ -31,7 +31,7 @@ export default function NavigationBar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem isActive={path == "/login"} className="hidden lg:flex">
-          <Link href="/login">Вход</Link>
+          <Link href="login">Вход</Link>
         </NavbarItem>
         <NavbarItem isActive={path == "/register"}>
           <Button as={Link} color="primary" href="#" variant="flat">
