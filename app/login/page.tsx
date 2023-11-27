@@ -1,11 +1,17 @@
-import LoginForm from '@/app/ui/login-form';
+import {Button} from '@nextui-org/button'
+import {Input} from "@nextui-org/input";
 
 export default function LoginPage() {
-    return (
-        <main className="flex items-center justify-center md:h-screen">
-            <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-                <LoginForm />
-            </div>
-        </main>
-    );
+  return (
+    <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center">
+        <h1 className="text-4xl font-bold">Вход</h1>
+        <div className="flex flex-col justify-center items-center">
+          <Input className="p-2" type="email" placeholder="Логин"/>
+          <Input className="p-2" type="password" placeholder="Пароль"/>
+          <Button className="">Войти</Button>
+        </div>
+      </div>
+    </div>
+  );
 }
