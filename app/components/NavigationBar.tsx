@@ -6,8 +6,6 @@ import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nex
 
 export default function NavigationBar() {
   const path = usePathname();
-  // /login
-  // /
 
   return (
     <Navbar>
@@ -17,12 +15,12 @@ export default function NavigationBar() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive={path == "/"}>
           <Link href="/">
-            Главная
+
           </Link>
         </NavbarItem>
         <NavbarItem isActive={path == "/orders"}>
           <Link href="/orders" aria-current="page">
-            Заказы
+            {path}
           </Link>
         </NavbarItem>
         {/*<NavbarItem>*/}
