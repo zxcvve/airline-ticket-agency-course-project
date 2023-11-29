@@ -1,7 +1,9 @@
 "use client";
 
 import {usePathname} from "next/navigation";
-import {Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
+import {Button} from "@nextui-org/button";
+import {Link} from "@nextui-org/link";
 
 
 export default function NavigationBar() {
