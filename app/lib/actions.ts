@@ -1,12 +1,7 @@
-"use client"
-
 import bcrypt from 'bcrypt';
-import {createPool, sql} from 'slonik';
 import {z} from 'zod';
-
-export const pool = await createPool(process.env.DATABASE_URL!)
-
-
+import sql from './db';
+import {PostgresError} from "postgres";
 
 async function validateCredentials(email: string, password: string) {
   const parsedCredentials = z
@@ -21,26 +16,29 @@ async function validateCredentials(email: string, password: string) {
 }
 
 export async function registerUser(email: string, password: string) {
-  const credentialsVaild = await validateCredentials(email, password);
+  const parsedCredentials = await validateCredentials(email, password);
 
-  if(!credentialsVaild) {
-    return false;
+  if (!parsedCredentials) {
+    return "Failed to parse credentials";
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(parsedCredentials.password, 10);
 
   try {
-    const result = await pool.query(sql.unsafe`
-      INSERT INTO users (email, password) values (${credentialsVaild.email}, ${credentialsVaild.password})
-    `);
+    return await sql`
+      INSERT INTO users (email, password) values (${parsedCredentials.email}, ${hashedPassword})    
+`;
+  } catch (err: any | PostgresError) {
+    // console.error("Error registering user", err);
+    if (err.code == 23505){
+      return "Email already exists"
+    }
 
-    return result.rowCount == 1;
-  } catch (err) {
-    console.error("Error registering user", err);
-    return false;
+    return "Unknown error";
   }
 }
 
+// TODO: rewrite it to use postgres
 export async function loginUser(email: string, password: string) {
   const credentialsVaild = await validateCredentials(email, password);
 
@@ -49,9 +47,8 @@ export async function loginUser(email: string, password: string) {
   }
 
   try {
-    const result = await pool.query(sql.unsafe`
-      SELECT * FROM users WHERE email = ${credentialsVaild.email}
-    `);
+    const query = "SELECT * FROM users WHERE email = $1"
+    const result = await pool.query(query,[credentialsVaild.email]);
 
     if (result.rowCount == 0) {
       console.log("No user found with email", credentialsVaild.email)
