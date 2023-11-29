@@ -9,14 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/pg-adapter": "^0.2.6",
     "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^2.2.9",
     "bcrypt": "^5.1.1",
     "framer-motion": "^10.16.4",
+    "iron-session": "^8.0.1",
     "next": "^14.0.3",
-    "next-auth": "^5.0.0-beta.3",
-    "pg": "^8.11.3",
+    "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.22.4"
