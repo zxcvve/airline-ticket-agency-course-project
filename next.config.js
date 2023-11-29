@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-
-// required to deploy to github pages
-const nextConfig = {
-}
+const nextConfig = {}
 
 module.exports = nextConfig
