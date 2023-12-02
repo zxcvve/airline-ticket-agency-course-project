@@ -30,7 +30,7 @@ export async function registerUser(email: string, password: string) {
 `;
   } catch (err: any | PostgresError) {
     // console.error("Error registering user", err);
-    if (err.code == 23505){
+    if (err.code == 23505) {
       return "Email already exists"
     }
 
@@ -42,13 +42,13 @@ export async function registerUser(email: string, password: string) {
 export async function loginUser(email: string, password: string) {
   const credentialsVaild = await validateCredentials(email, password);
 
-  if(!credentialsVaild) {
+  if (!credentialsVaild) {
     return false;
   }
 
   try {
     const query = "SELECT * FROM users WHERE email = $1"
-    const result = await pool.query(query,[credentialsVaild.email]);
+    const result = await pool.query(query, [credentialsVaild.email]);
 
     if (result.rowCount == 0) {
       console.log("No user found with email", credentialsVaild.email)
@@ -68,19 +68,5 @@ export async function loginUser(email: string, password: string) {
   } catch (err) {
     console.error("Error logging in user", err);
     return false;
-  }
-}
-
-export async function handleRegister(
-  prevState: string | undefined,
-  formData: FormData,
-) {
-  try {
-    const email = Object.fromEntries(formData).email;
-    const password = Object.fromEntries(formData).password;
-
-    await registerUser(email, password);
-  } catch (error) {
-    console.error(error);
   }
 }
