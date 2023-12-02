@@ -2,6 +2,11 @@ import bcrypt from 'bcrypt';
 import {z} from 'zod';
 import sql from './db';
 import {PostgresError} from "postgres";
+import {getIronSession} from "iron-session";
+import {SessionData, sessionOptions} from "@/app/lib/session";
+import {cookies} from "next/headers";
+import {User} from "@/app/lib/definitions";
+
 
 async function validateCredentials(email: string, password: string) {
   const parsedCredentials = z
@@ -55,7 +60,7 @@ export async function loginUser(email: string, password: string) {
       return false;
     }
 
-    const user = users[0];
+    const user: User = users[0] as User;
 
     const passwordMatches = await bcrypt.compare(credentialsValid.password, user.password);
 
@@ -64,9 +69,20 @@ export async function loginUser(email: string, password: string) {
       return false;
     }
 
+    await setIronSession(user.email, user.role);
     return true;
   } catch (err) {
     console.error("Error logging in user", err);
     return false;
   }
+}
+
+async function setIronSession(email: string, role: string) {
+  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+
+  session.isLoggedIn = true;
+  session.username = email;
+  session.role = role;
+
+  await session.save();
 }
