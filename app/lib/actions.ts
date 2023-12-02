@@ -38,26 +38,26 @@ export async function registerUser(email: string, password: string) {
   }
 }
 
-// TODO: rewrite it to use postgres
 export async function loginUser(email: string, password: string) {
-  const credentialsVaild = await validateCredentials(email, password);
+  const credentialsValid = await validateCredentials(email, password);
 
-  if (!credentialsVaild) {
+  if (!credentialsValid) {
     return false;
   }
 
   try {
-    const query = "SELECT * FROM users WHERE email = $1"
-    const result = await pool.query(query, [credentialsVaild.email]);
+    const users = await sql`
+      SELECT * FROM users WHERE email = ${credentialsValid.email}
+    `;
 
-    if (result.rowCount == 0) {
-      console.log("No user found with email", credentialsVaild.email)
+    if (users.count === 0) {
+      console.log("No user found with email", credentialsValid.email)
       return false;
     }
 
-    const user = result.rows[0];
+    const user = users[0];
 
-    const passwordMatches = await bcrypt.compare(credentialsVaild.password, user.password);
+    const passwordMatches = await bcrypt.compare(credentialsValid.password, user.password);
 
     if (!passwordMatches) {
       console.log("Password does not match")
