@@ -1,3 +1,5 @@
+"use server"
+
 import bcrypt from 'bcrypt';
 import {z} from 'zod';
 import sql from './db';
