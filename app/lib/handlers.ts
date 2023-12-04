@@ -9,5 +9,6 @@ import {loginUser, registerUser} from "@/app/lib/actions";
 export async function handleLogin(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
-  console.log(email, password);
+  const res = await loginUser(email, password);
+
 }

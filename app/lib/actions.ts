@@ -88,3 +88,13 @@ async function setIronSession(email: string, role: string) {
 
   await session.save();
 }
+
+export async function clearIronSession() {
+  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+
+  session.isLoggedIn = false;
+  session.username = "";
+  session.role = "";
+
+  await session.save();
+}
