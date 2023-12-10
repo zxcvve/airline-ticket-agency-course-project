@@ -1,9 +1,8 @@
 import LoginForm from "@/app/components/login-form";
-import {getIronSession} from "iron-session";
-import {SessionData, sessionOptions} from "@/app/lib/session";
-import {cookies} from "next/headers";
-import {redirect} from "next/navigation";
-
+import { getIronSession } from "iron-session";
+import { SessionData, sessionOptions } from "@/app/lib/session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
@@ -16,16 +15,14 @@ async function Content() {
   if (session.isLoggedIn) {
     redirect("/account");
   } else {
-    return (<>
-        <LoginForm/>
+    return (
+      <>
+        <LoginForm />
       </>
-    )
+    );
   }
-
 }
 
 export default function LoginPage() {
-  return (
-    <Content/>
-  );
+  return <Content />;
 }

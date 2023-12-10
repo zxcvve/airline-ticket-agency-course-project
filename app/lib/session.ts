@@ -1,4 +1,4 @@
-import {getIronSession, SessionOptions} from "iron-session";
+import { getIronSession, SessionOptions } from "iron-session";
 
 export interface SessionData {
   username: string;
@@ -13,7 +13,6 @@ export const defaultSession: SessionData = {
 };
 
 export const sessionOptions: SessionOptions = {
-
   password: process.env.SESSION_PASSWORD!,
   cookieName: "air-app-session",
   cookieOptions: {

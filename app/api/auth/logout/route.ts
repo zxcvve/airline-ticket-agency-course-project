@@ -1,4 +1,4 @@
-import {clearIronSession} from "@/app/lib/actions";
+import { clearIronSession } from "@/app/lib/actions";
 
 export const dynamic = "force-dynamic";
 

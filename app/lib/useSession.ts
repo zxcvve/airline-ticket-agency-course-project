@@ -1,9 +1,8 @@
 import useSWR from "swr";
-import {defaultSession, SessionData} from "@/app/lib/session"
+import { defaultSession, SessionData } from "@/app/lib/session";
 import useSWRMutation from "swr/mutation";
 
-const sessionApiRoute =
-  "/api/auth/session";
+const sessionApiRoute = "/api/auth/session";
 
 async function fetchJson<JSON = unknown>(
   input: RequestInfo,
@@ -18,10 +17,10 @@ async function fetchJson<JSON = unknown>(
   }).then((res) => res.json());
 }
 
-function doLogin(url: string, {arg}: { arg: string }) {
+function doLogin(url: string, { arg }: { arg: string }) {
   return fetchJson<SessionData>(url, {
     method: "POST",
-    body: JSON.stringify({username: arg}),
+    body: JSON.stringify({ username: arg }),
   });
 }
 
@@ -32,7 +31,7 @@ function doLogout(url: string) {
 }
 
 export default function useSession() {
-  const {data: session, isLoading} = useSWR(
+  const { data: session, isLoading } = useSWR(
     sessionApiRoute,
     fetchJson<SessionData>,
     {
@@ -40,11 +39,11 @@ export default function useSession() {
     },
   );
 
-  const {trigger: login} = useSWRMutation(sessionApiRoute, doLogin, {
+  const { trigger: login } = useSWRMutation(sessionApiRoute, doLogin, {
     // the login route already provides the updated information, no need to revalidate
     revalidate: false,
   });
-  const {trigger: logout} = useSWRMutation(sessionApiRoute, doLogout);
+  const { trigger: logout } = useSWRMutation(sessionApiRoute, doLogout);
 
-  return {session, logout, login, isLoading};
+  return { session, logout, login, isLoading };
 }
