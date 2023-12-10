@@ -9,4 +9,5 @@ export async function handleLogin(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const res = await loginUser(email, password);
+  return res;
 }

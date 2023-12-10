@@ -58,7 +58,7 @@ export async function loginUser(email: string, password: string) {
 
     if (users.count === 0) {
       console.log("No user found with email", credentialsValid.email);
-      return false;
+      return "No user found with that email";
     }
 
     const user: User = users[0] as User;
@@ -70,7 +70,7 @@ export async function loginUser(email: string, password: string) {
 
     if (!passwordMatches) {
       console.log("Password does not match");
-      return false;
+      return "Wrong password";
     }
 
     await setIronSession(user.email, user.role);
