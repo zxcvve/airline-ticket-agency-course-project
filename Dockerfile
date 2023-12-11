@@ -4,9 +4,12 @@ FROM node:20.9.0-alpine3.18
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Install dependencies and build
+# Install dependencies
 COPY . .
-RUN npm install && npm run build
+RUN npm install 
+
+# Build for production
+RUN npm run build
 
 # Expose the port that your Next.js app will run on
 EXPOSE 3000
