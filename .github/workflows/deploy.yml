@@ -30,6 +30,7 @@ jobs:
           git pull origin master
           git status
           docker stop air-app
+          docker rm air-app
           docker rmi -f air-app
           docker build -t air-app .
           docker run -d -p 3000:3000 air-app
