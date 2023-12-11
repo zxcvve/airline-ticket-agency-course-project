@@ -4,13 +4,13 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
 
-export default async function LoginPage() {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // const [state, dispatch] = useFormState(registerUser, undefined);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const response = await fetch("/api/register", {
       method: "POST",
