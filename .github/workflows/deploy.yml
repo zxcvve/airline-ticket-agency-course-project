@@ -33,4 +33,4 @@ jobs:
           docker rm air-app
           docker rmi -f air-app
           docker build -t air-app .
-          docker run -d -p 3000:3000 air-app
+          docker run -d -p 3000:3000 --name air-app air-app
