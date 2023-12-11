@@ -26,7 +26,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
         script: |
-          cd ~/home/githubdeploy/apps/air-app
+          cd /home/githubdeploy/airline-ticket-agency-course-project
           git pull origin master
           git status
           docker stop air-app
