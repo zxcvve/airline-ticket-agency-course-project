@@ -1,37 +1,29 @@
-"use client";
+import LoginForm from "@/app/components/login-form";
+import { getIronSession } from "iron-session";
+import { SessionData, sessionOptions } from "@/app/lib/session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import RegistrationForm from "../components/registration-form";
 
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { useState } from "react";
+async function getSession() {
+  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  return session;
+}
 
-  // const [state, dispatch] = useFormState(registerUser, undefined);
+async function Content() {
+  const session = await getSession();
+  if (session.isLoggedIn) {
+    redirect("/account");
+  } else {
+    return (
+      <>
+        <RegistrationForm />
+      </>
+    );
+  }
+}
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const response = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    });
-  };
-
-  return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-4xl font-bold">Регистрация</h1>
-        <div className="flex flex-col justify-center items-center">
-          <form className="flex flex-col justify-center items-center">
-            <Input className="p-2" type="email" placeholder="Логин" />
-            <Input className="p-2" type="password" placeholder="Пароль" />
-            <Button type="submit" onClick={(e) => handleSubmit(e)}>
-              Регистрация
-            </Button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+export default function RegistrationPage() {
+  return <Content />;
 }

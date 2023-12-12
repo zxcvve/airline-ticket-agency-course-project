@@ -10,30 +10,30 @@ import { cookies } from "next/headers";
 import { User } from "@/app/lib/definitions";
 
 async function validateCredentials(email: string, password: string) {
-  const parsedCredentials = z
+  const credentialsValid = z
     .object({ email: z.string().email(), password: z.string().min(6) })
     .safeParse({ email, password });
 
-  if (!parsedCredentials.success) {
-    console.log("Invalid credentials", parsedCredentials.error);
+  if (!credentialsValid.success) {
+    console.log("Invalid credentials", credentialsValid.error);
     return false;
   }
-  return parsedCredentials.data;
+  return credentialsValid.data;
 }
 
 export async function registerUser(email: string, password: string) {
-  const parsedCredentials = await validateCredentials(email, password);
+  const credentialsValid = await validateCredentials(email, password);
 
-  if (!parsedCredentials) {
-    return "Failed to parse credentials";
+  if (!credentialsValid) {
+    return false;
   }
 
-  const hashedPassword = await bcrypt.hash(parsedCredentials.password, 10);
+  const hashedPassword = await bcrypt.hash(credentialsValid.password, 10);
 
   try {
-    return await sql`
-      INSERT INTO users (email, password) values (${parsedCredentials.email}, ${hashedPassword})    
-`;
+    await sql`
+      INSERT INTO "user" (email, password) values (${credentialsValid.email}, ${hashedPassword})    
+    `;
   } catch (err: any | PostgresError) {
     // console.error("Error registering user", err);
     if (err.code == 23505) {
@@ -53,7 +53,7 @@ export async function loginUser(email: string, password: string) {
 
   try {
     const users = await sql`
-      SELECT * FROM users WHERE email = ${credentialsValid.email}
+      SELECT * FROM "user" WHERE email = ${credentialsValid.email}
     `;
 
     if (users.count === 0) {
@@ -100,3 +100,5 @@ export async function clearIronSession() {
 
   await session.save();
 }
+
+export async function getUserOrders(userId: number) {}

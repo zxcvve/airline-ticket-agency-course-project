@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavigationBar />
-          {children}
+          <div className="m-4">{children}</div>
         </Providers>
       </body>
     </html>
