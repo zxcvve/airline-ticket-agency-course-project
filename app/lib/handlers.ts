@@ -12,7 +12,6 @@ export async function handleLogin(prevState: any, formData: FormData) {
   return res;
 }
 
-
 export async function handleRegister(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
