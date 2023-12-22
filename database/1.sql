@@ -36,13 +36,13 @@ CREATE TABLE "route" (
   "flight_duration" interval
 );
 
-CREATE TABLE "ticket_price" (
-  "id" serial PRIMARY KEY,
-  "flight" int,
-  "price_starts" timestamptz,
-  "price_ends" timestamptz,
-  "price" money
-);
+-- CREATE TABLE "ticket_price" (
+--   "id" serial PRIMARY KEY,
+--   "flight" int,
+--   "price_starts" timestamptz,
+--   "price_ends" timestamptz,
+--   "price" money
+-- );
 
 CREATE TABLE "ticket" (
   "id" serial PRIMARY KEY,
@@ -59,6 +59,14 @@ CREATE TABLE "airport" (
   "country" text,
   "address" text,
   "coordinates" point
+);
+
+CREATE TABLE "price" (
+    "id" serial PRIMARY KEY,
+    "flight_id" INT,
+    "time_left_threshold" interval,
+    base_price MONEY,
+    FOREIGN KEY (flight_id) REFERENCES flight(id)
 );
 
 ALTER TABLE "ticket" ADD FOREIGN KEY ("passanger") REFERENCES "user" ("id");
