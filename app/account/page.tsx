@@ -2,6 +2,7 @@ import { SessionData, sessionOptions } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
@@ -25,6 +26,7 @@ async function Content() {
       <>
         <p>Hello {session.username}!</p>
         <p>Your role: {session.role}</p>
+        <Link href="/account/edit">Редактировать информацию</Link>
       </>
     );
   }
