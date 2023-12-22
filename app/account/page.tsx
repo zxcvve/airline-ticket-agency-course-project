@@ -24,7 +24,7 @@ async function Content() {
     return (
       <>
         <p>Hello {session.username}!</p>
-        <p>Your role: {session.role};</p>
+        <p>Your role: {session.role}</p>
       </>
     );
   }
