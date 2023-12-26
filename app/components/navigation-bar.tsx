@@ -62,7 +62,7 @@ export default function NavigationBar() {
           <Link href={"/"}>Главная</Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="orders" aria-current="page">
+          <Link href="/orders" aria-current="page">
             Заказы
           </Link>
         </NavbarItem>
