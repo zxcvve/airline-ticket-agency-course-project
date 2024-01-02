@@ -46,7 +46,7 @@ CREATE TABLE "route" (
 
 CREATE TABLE "ticket" (
   "id" serial PRIMARY KEY,
-  "passanger" int,
+  "passenger" int,
   "flight" int,
   "price" money,
   "seat" text
@@ -69,7 +69,20 @@ CREATE TABLE "price" (
     FOREIGN KEY (flight_id) REFERENCES flight(id)
 );
 
-ALTER TABLE "ticket" ADD FOREIGN KEY ("passanger") REFERENCES "user" ("id");
+CREATE TABLE seats (
+    seat_id serial PRIMARY KEY,
+    flight_id INT,
+    seat_number VARCHAR(5) NOT NULL,
+    is_occupied BOOLEAN NOT NULL,
+    passenger_id INT,
+);
+
+ALTER TABLE "seats" ADD FOREIGN KEY ("flight_id") REFERENCES "flight" ("id");
+
+ALTER TABLE "seats" ADD FOREIGN KEY ("passenger_id") REFERENCES "user" ("id");
+
+
+ALTER TABLE "ticket" ADD FOREIGN KEY ("passenger") REFERENCES "user" ("id");
 
 ALTER TABLE "ticket" ADD FOREIGN KEY ("flight") REFERENCES "flight" ("id");
 
@@ -82,4 +95,6 @@ ALTER TABLE "ticket_price" ADD FOREIGN KEY ("flight") REFERENCES "flight" ("id")
 ALTER TABLE "route" ADD FOREIGN KEY ("departure_airport") REFERENCES "airport" ("id");
 
 ALTER TABLE "route" ADD FOREIGN KEY ("arrival_airport") REFERENCES "airport" ("id");
+
+
 
