@@ -97,4 +97,31 @@ ALTER TABLE "route" ADD FOREIGN KEY ("departure_airport") REFERENCES "airport" (
 ALTER TABLE "route" ADD FOREIGN KEY ("arrival_airport") REFERENCES "airport" ("id");
 
 
+CREATE VIEW "route_with_airport_names" AS
+SELECT 
+  r.id AS route_id, 
+  origin.title AS origin_airport_name, 
+  destination.title AS destination_airport_name, 
+  r.flight_duration
+FROM 
+  "route" r
+JOIN 
+  "airport" origin ON r.departure_airport = origin.id
+JOIN 
+  "airport" destination ON r.arrival_airport = destination.id;
 
+
+CREATE PROCEDURE GenerateSeats(flight_id INT)
+LANGUAGE plpgsql AS $$
+DECLARE
+    airplane_id INT;
+    seats_count INT;
+BEGIN
+    SELECT airplane INTO airplane_id FROM flight WHERE id = flight_id;
+
+    SELECT seats INTO seats_count FROM airplane WHERE id = airplane_id;
+
+    FOR i IN 1..seats_count LOOP
+        INSERT INTO seats (flight_id, seat_number, is_occupied) VALUES (flight_id, i, FALSE);
+    END LOOP;
+END; $$
