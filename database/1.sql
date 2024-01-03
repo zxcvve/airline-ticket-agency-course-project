@@ -125,3 +125,15 @@ BEGIN
         INSERT INTO seats (flight_id, seat_number, is_occupied) VALUES (flight_id, i, FALSE);
     END LOOP;
 END; $$
+
+CREATE OR REPLACE FUNCTION call_generate_seats() RETURNS TRIGGER AS $$
+BEGIN
+  CALL GenerateSeats(NEW.id);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER generate_seats_after_insert
+AFTER INSERT ON flight
+FOR EACH ROW
+EXECUTE FUNCTION call_generate_seats();
