@@ -61,7 +61,7 @@ export async function loginUser(email: string, password: string) {
       return "No user found with that email";
     }
 
-    const user: User = users[0] as User;
+    const user: user = users[0] as user;
 
     const passwordMatches = await bcrypt.compare(
       credentialsValid.password,
