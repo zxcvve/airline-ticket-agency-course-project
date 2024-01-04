@@ -24,7 +24,7 @@ export default function FlightSearchBar() {
     <form onSubmit={handleSubmit}>
       <div className="space-y-4">
         <p className="text-center">Поиск</p>
-        <div className="flex flex-row justify-center items-center space-x-5 m-10 max-w-xl mx-auto">
+        <div className="flex flex-row w-96 space-x-5 m-10">
           <Select>
             {airports.map((airport) => (
               <SelectItem key={airport} value={airport}>
