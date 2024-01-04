@@ -3,12 +3,14 @@ import { redirect } from "next/navigation";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { Link } from "@nextui-org/link";
+import { Button } from "@nextui-org/button";
 
 async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
   return session;
 }
+
 export default function UserInfo() {
   return (
     <div>
@@ -25,6 +27,7 @@ async function Content() {
     return (
       <>
         <p>Hello {session.username}!</p>
+        <p>Your ID: {session.userId}</p>
         <p>Your role: {session.role}</p>
         <Link href="/account/edit">Редактировать информацию</Link>
       </>
