@@ -6,8 +6,7 @@ import { SessionData, sessionOptions } from "@/app/lib/session";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Divider } from "@nextui-org/divider"
-
+import { Divider } from "@nextui-org/divider";
 
 async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
@@ -24,8 +23,12 @@ function Order(order: TicketInfo) {
   //   </div>
   // );
 
-  const flight_departure_date = new Date(order.departure_time).toLocaleDateString();
-  const flight_departure_time = new Date(order.departure_time).toLocaleTimeString();
+  const flight_departure_date = new Date(
+    order.departure_time,
+  ).toLocaleDateString();
+  const flight_departure_time = new Date(
+    order.departure_time,
+  ).toLocaleTimeString();
 
   const flight_arrival_date = new Date(order.arrival_time).toLocaleDateString();
   const flight_arrival_time = new Date(order.arrival_time).toLocaleTimeString();
@@ -33,7 +36,10 @@ function Order(order: TicketInfo) {
   return (
     <Card className="m-2" isHoverable={true}>
       <CardBody className="flex flex-row ">
-        <p>{order.ticket_id}</p>
+        <p>
+          {order.ticket_id} <br />
+          {order.airplane_model}
+        </p>
         <Divider orientation="vertical" className="px-4" />
         <p>
           {order.departure_airport} <br />
