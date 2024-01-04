@@ -5,7 +5,7 @@ import { Input } from "@nextui-org/input";
 
 export default function EditUserInfo() {
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="">
       <form>
         <Input
           className="p-2"
