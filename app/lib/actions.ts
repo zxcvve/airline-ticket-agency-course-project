@@ -7,7 +7,7 @@ import { PostgresError } from "postgres";
 import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
 import { cookies } from "next/headers";
-import { user, flight, FlightInfo, Seat } from "@/app/lib/definitions";
+import { user, flight, FlightInfo, Seat, TicketInfo } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 
 async function validateCredentials(email: string, password: string) {
@@ -103,7 +103,12 @@ export async function clearIronSession() {
   await session.save();
 }
 
-export async function getUserOrders(userId: number) {}
+export async function getUserOrders(userId: number) {
+  const orders: TicketInfo[] = await sql`
+    SELECT * FROM "user_tickets" WHERE user_id = ${userId}
+  `;
+  return orders;
+}
 
 export async function getFlightList() {
   const flights: flight[] = await sql`

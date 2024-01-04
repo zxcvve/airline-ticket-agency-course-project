@@ -79,6 +79,20 @@ export interface FlightInfo {
   current_price: string;
 }
 
+export interface TicketInfo {
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  ticket_id: number;
+  ticket_price: number;
+  seat_number: string;
+  flight_number: string;
+  departure_airport: string;
+  arrival_airport: string;
+  departure_time: Date;
+  arrival_time: Date;
+}
+
 export interface Seat {
   seat_id: number,
   flight_id: number,
