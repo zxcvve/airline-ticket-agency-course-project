@@ -87,6 +87,7 @@ export interface TicketInfo {
   ticket_price: number;
   seat_number: string;
   flight_number: string;
+  airplane_model: string;
   departure_airport: string;
   arrival_airport: string;
   departure_time: Date;
