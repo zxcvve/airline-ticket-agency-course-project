@@ -72,7 +72,7 @@ CREATE TABLE "price" (
 CREATE TABLE seats (
     seat_id serial PRIMARY KEY,
     flight_id INT,
-    seat_number VARCHAR(5) NOT NULL,
+    seat_number INT NOT NULL,
     is_occupied BOOLEAN NOT NULL,
     passenger_id INT,
 );
@@ -137,3 +137,25 @@ CREATE TRIGGER generate_seats_after_insert
 AFTER INSERT ON flight
 FOR EACH ROW
 EXECUTE FUNCTION call_generate_seats();
+
+CREATE VIEW "flight_info" AS
+SELECT 
+  f.id AS flight_id, 
+  f.flight_number,
+  f.departure_time,
+  f.arrival_time,
+  a.model AS airplane_model, 
+  a.reg_number AS airplane_reg_number, 
+  dep.title AS departure_airport, 
+  arr.title AS arrival_airport,
+  r.flight_duration
+FROM 
+  "flight" f
+JOIN 
+  "airplane" a ON f.airplane = a.id
+JOIN 
+  "route" r ON f.route = r.id
+JOIN
+  "airport" dep ON r.departure_airport = dep.id
+JOIN
+  "airport" arr ON r.arrival_airport = arr.id;
