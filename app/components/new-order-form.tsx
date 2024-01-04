@@ -12,19 +12,29 @@ import { SessionData, defaultSession } from "@/app/lib/session";
 import { use, useEffect, useState } from "react";
 import { getFreeSeats, newOrder } from "../lib/actions";
 
-function SeatSelect(props: any) {
+function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
   const [seats, setSeats] = useState<Seat[]>([]);
 
   useEffect(() => {
-    getFreeSeats(props.flight_id,50).then((seats) => {
+    getFreeSeats(flight_id, 50).then((seats) => {
       setSeats(seats);
     });
-  }, [props.flight_id]);
+  }, [flight_id]);
 
   return (
-    <Select label="Место" isRequired items={seats}>
+    <Select
+      label="Место"
+      isRequired
+      items={seats}
+      selectedKeys={seat}
+      onChange={onSeatSelect}
+    >
       {(seat) => (
-        <SelectItem key={seat.seat_id} textValue={String(seat.seat_number)}>
+        <SelectItem
+          key={seat.seat_id}
+          value={seat.seat_id}
+          textValue={String(seat.seat_number)}
+        >
           {seat.seat_number}
         </SelectItem>
       )}
@@ -71,6 +81,10 @@ function Form(props: any) {
 
   const price_number: number = Number(flight.current_price.substring(1));
 
+  const [selectedSeat, setSelectedSeat] = useState<any>();
+
+  const seatNumber = selectedSeat?.target.value;
+
   return (
     <Card className="" isHoverable={true}>
       <CardBody className="flex flex-row ">
@@ -87,11 +101,23 @@ function Form(props: any) {
         </p>
       </CardBody>
       <CardFooter className="justify-center">
-        <SeatSelect flight_id={flight.flight_id} />
+        <SeatSelect
+          flight_id={flight.flight_id}
+          seat=""
+          onSeatSelect={setSelectedSeat}
+        />
         <Button
-          onClick={() =>
-            newOrder(session.userId, flight.flight_id, price_number, 1)
-          }
+          onClick={() => {
+            if (seatNumber) {
+              const res = newOrder(
+                session.userId,
+                flight.flight_id,
+                price_number,
+                seatNumber,
+              );
+              console.log(res);
+            }
+          }}
         >
           Купить {flight.current_price}
         </Button>
