@@ -166,3 +166,15 @@ JOIN
   "airport" dep ON r.departure_airport = dep.id
 JOIN
   "airport" arr ON r.arrival_airport = arr.id;
+
+CREATE OR REPLACE FUNCTION mark_seat_as_taken() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE seats SET is_occupied = TRUE, passenger_id = NEW.passenger WHERE seat_id = NEW.seat;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER mark_seat_as_taken_after_insert
+AFTER INSERT ON ticket
+FOR EACH ROW
+EXECUTE FUNCTION mark_seat_as_taken();
