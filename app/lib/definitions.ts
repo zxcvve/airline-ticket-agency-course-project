@@ -76,5 +76,13 @@ export interface FlightInfo {
   departure_airport: string;
   arrival_airport: string;
   flight_duration: number;
-  current_price: number;
+  current_price: string;
+}
+
+export interface Seat {
+  seat_id: number,
+  flight_id: number,
+  seat_number: number,
+  is_occupied: boolean,
+  passenger_id: number
 }
