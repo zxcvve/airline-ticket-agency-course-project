@@ -148,7 +148,14 @@ SELECT
   a.reg_number AS airplane_reg_number, 
   dep.title AS departure_airport, 
   arr.title AS arrival_airport,
-  r.flight_duration
+  r.flight_duration,
+  (
+    SELECT p.base_price 
+    FROM price p 
+    WHERE p.flight_id = f.id AND p.time_left_threshold > f.departure_time - NOW() 
+    ORDER BY p.time_left_threshold ASC 
+    LIMIT 1
+  ) AS current_price
 FROM 
   "flight" f
 JOIN 
