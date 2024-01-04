@@ -96,6 +96,7 @@ ALTER TABLE "route" ADD FOREIGN KEY ("departure_airport") REFERENCES "airport" (
 
 ALTER TABLE "route" ADD FOREIGN KEY ("arrival_airport") REFERENCES "airport" ("id");
 
+ALTER TABLE "ticket" ADD CONSTRAINT "unique_seat_per_flight" UNIQUE ("flight", "seat");
 
 CREATE VIEW "route_with_airport_names" AS
 SELECT 
