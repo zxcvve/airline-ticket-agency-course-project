@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { Providers } from "../providers";
-import NavigationBar from "../components/navigation-bar";
+import NavigationBar from "./navigation-bar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavigationBar />
-          <div className="m-4">{children}</div>
+          <div className="flex justify-center items-center">{children}</div>
         </Providers>
       </body>
     </html>
