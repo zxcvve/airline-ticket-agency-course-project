@@ -1,3 +1,5 @@
+// TODO: Rename interfaces to PascalCase
+
 type Gender = "Male" | "Female" | "Other";
 
 export interface user {
@@ -62,4 +64,17 @@ export interface airport {
     x: number;
     y: number;
   };
+}
+
+export interface FlightInfo {
+  flight_id: number;
+  flight_number: string;
+  departure_time: Date;
+  arrival_time: Date;
+  airplane_model: string;
+  airplane_reg_number: string;
+  departure_airport: string;
+  arrival_airport: string;
+  flight_duration: number;
+  current_price: number;
 }

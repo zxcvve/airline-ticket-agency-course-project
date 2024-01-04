@@ -1,12 +1,14 @@
 import { getIronSession, SessionOptions } from "iron-session";
 
 export interface SessionData {
+  userId: number;
   username: string;
   isLoggedIn: boolean;
   role: string;
 }
 
 export const defaultSession: SessionData = {
+  userId: 0,
   username: "",
   isLoggedIn: false,
   role: "guest",
@@ -23,3 +25,5 @@ export const sessionOptions: SessionOptions = {
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+
