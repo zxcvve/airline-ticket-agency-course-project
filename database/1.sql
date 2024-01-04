@@ -49,7 +49,7 @@ CREATE TABLE "ticket" (
   "passenger" int,
   "flight" int,
   "price" money,
-  "seat" text
+  "seat" int
 );
 
 CREATE TABLE "airport" (
