@@ -5,9 +5,9 @@ import { Divider } from "@nextui-org/divider";
 import { Button } from "@nextui-org/button";
 import { FlightInfo } from "../lib/definitions";
 import { Input } from "@nextui-org/input";
-import { newOrder, registerUser } from "../lib/actions";
+import { redirectToLogin } from "@/app/(user)/lib/actions";
 
-import { SessionData, defaultSession, sessionOptions } from "@/app/lib/session";
+import { SessionData, defaultSession } from "@/app/lib/session";
 import { useEffect, useState } from "react";
 
 export function NewOrderForm(flight: FlightInfo) {
@@ -32,11 +32,16 @@ export function NewOrderForm(flight: FlightInfo) {
       flight,
       session,
     };
-    return <Form {...flight} {...session} />;
+    return <Form {...props} />;
   }
+
+  redirectToLogin();
 }
 
-function Form(flight: FlightInfo, session: SessionData) {
+function Form(props: any) {
+  const flight = props.flight;
+  const session = props.session;
+
   const userId = session.userId;
 
   const flight_departure_date = flight.departure_time.toLocaleDateString();
