@@ -115,7 +115,6 @@ function Form(props: any) {
                 price_number,
                 seatNumber,
               );
-              console.log(res);
             }
           }}
         >
