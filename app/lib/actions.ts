@@ -7,7 +7,7 @@ import { PostgresError } from "postgres";
 import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
 import { cookies } from "next/headers";
-import { user, flight, FlightInfo } from "@/app/lib/definitions";
+import { user, flight, FlightInfo, Seat } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 
 async function validateCredentials(email: string, password: string) {
@@ -126,11 +126,29 @@ export async function getFlightInfo(id: number) {
   return flights[0];
 }
 
-
-export async function newOrder(passenger: number, flight: number, price: number, seat: number) {
+export async function newOrder(
+  passenger: number,
+  flight: number,
+  price: number,
+  seat: number,
+) {
   const flights: FlightInfo[] = await sql`
     INSERT INTO "ticket" (passenger, flight, price, seat) VALUES (${passenger}, ${flight}, ${price}, ${seat})
   `;
-  return flights[0];
+  // return flights[0];
+  return redirect("/orders");
 }
 
+export async function getFreeSeats(flight_id: number, limit?: number) {
+  if (limit) {
+    const seats: Seat[] = await sql`
+    SELECT * FROM "seats" WHERE flight_id = ${flight_id} AND is_occupied = false LIMIT ${limit}
+  `;
+    return seats;
+  }
+
+  const seats: Seat[] = await sql`
+    SELECT * FROM "seats" WHERE flight_id = ${flight_id} AND is_occupied = false
+  `;
+  return seats;
+}
