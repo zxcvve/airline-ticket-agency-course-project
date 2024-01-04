@@ -179,3 +179,32 @@ CREATE TRIGGER mark_seat_as_taken_after_insert
 AFTER INSERT ON ticket
 FOR EACH ROW
 EXECUTE FUNCTION mark_seat_as_taken();
+
+CREATE VIEW "user_tickets" AS
+SELECT 
+  u.id AS user_id, 
+  u.first_name, 
+  u.last_name, 
+  t.id AS ticket_id, 
+  t.price AS ticket_price, 
+  t.seat AS seat_number, 
+  f.flight_number, 
+  a.model AS airplane_model, 
+  dep.title AS departure_airport, 
+  arr.title AS arrival_airport, 
+  f.departure_time, 
+  f.arrival_time
+FROM 
+  "user" u
+JOIN 
+  "ticket" t ON u.id = t.passenger
+JOIN 
+  "flight" f ON t.flight = f.id
+JOIN 
+  "airplane" a ON f.airplane = a.id
+JOIN 
+  "route" r ON f.route = r.id
+JOIN
+  "airport" dep ON r.departure_airport = dep.id
+JOIN
+  "airport" arr ON r.arrival_airport = arr.id;
