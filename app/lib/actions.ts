@@ -8,6 +8,7 @@ import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
 import { cookies } from "next/headers";
 import { user, flight, FlightInfo } from "@/app/lib/definitions";
+import { redirect } from "next/navigation";
 
 async function validateCredentials(email: string, password: string) {
   const credentialsValid = z
@@ -73,7 +74,7 @@ export async function loginUser(email: string, password: string) {
       return "Wrong password";
     }
 
-    await setIronSession(user.email, user.role);
+    await setIronSession(user.id, user.email, user.role);
     return true;
   } catch (err) {
     console.error("Error logging in user", err);
@@ -81,9 +82,10 @@ export async function loginUser(email: string, password: string) {
   }
 }
 
-async function setIronSession(email: string, role: string) {
+async function setIronSession(userId: number, email: string, role: string) {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
+  session.userId = userId;
   session.isLoggedIn = true;
   session.username = email;
   session.role = role;
@@ -116,3 +118,19 @@ export async function getFlightInfoList() {
   `;
   return flights;
 }
+
+export async function getFlightInfo(id: number) {
+  const flights: FlightInfo[] = await sql`
+    SELECT * FROM "flight_info" WHERE flight_id = ${id}
+  `;
+  return flights[0];
+}
+
+
+export async function newOrder(passenger: number, flight: number, price: number, seat: number) {
+  const flights: FlightInfo[] = await sql`
+    INSERT INTO "ticket" (passenger, flight, price, seat) VALUES (${passenger}, ${flight}, ${price}, ${seat})
+  `;
+  return flights[0];
+}
+
