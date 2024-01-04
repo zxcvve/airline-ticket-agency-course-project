@@ -70,3 +70,75 @@ SELECT * FROM seats
 
 
 CALL GenerateSeats(1)
+
+
+SELECT * FROM "flight"
+
+SELECT * FROM "price"
+
+SELECT * FROM "seats"
+
+CREATE VIEW "flight_info" AS
+SELECT 
+  f.id AS flight_id, 
+  f.flight_number,
+  f.departure_time,
+  f.arrival_time,
+  a.model AS airplane_model, 
+  a.reg_number AS airplane_reg_number, 
+  dep.title AS departure_airport, 
+  arr.title AS arrival_airport,
+  r.flight_duration,
+  (
+    SELECT p.base_price
+    FROM price p 
+    WHERE p.flight_id = f.id AND p.time_left_threshold > f.departure_time - NOW() 
+    ORDER BY p.time_left_threshold ASC 
+    LIMIT 1
+  ) AS current_price,
+    (
+    SELECT p.id
+    FROM price p 
+    WHERE p.flight_id = f.id AND p.time_left_threshold > f.departure_time - NOW() 
+    ORDER BY p.time_left_threshold ASC 
+    LIMIT 1
+  ) AS price_id
+FROM 
+  "flight" f
+JOIN 
+  "airplane" a ON f.airplane = a.id
+JOIN 
+  "route" r ON f.route = r.id
+JOIN
+  "airport" dep ON r.departure_airport = dep.id
+JOIN
+  "airport" arr ON r.arrival_airport = arr.id;
+  
+  
+DROP VIEW "flight_info"
+  
+SELECT * FROM "flight_info"
+
+SELECT * FROM "flight_info" WHERE flight_id = 1
+
+SELECT * FROM "ticket"
+
+ALTER TABLE "ticket" ALTER COLUMN "seat" TYPE int USING seat::integer
+
+SELECT * FROM "seats" WHERE flight_id = 1 AND is_occupied = false
+
+
+CREATE OR REPLACE FUNCTION mark_seat_as_taken() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE seats SET is_occupied = TRUE, passenger_id = NEW.passenger WHERE seat_id = NEW.seat;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER mark_seat_as_taken_after_insert
+AFTER INSERT ON ticket
+FOR EACH ROW
+EXECUTE FUNCTION mark_seat_as_taken();
+
+
+ALTER TABLE "ticket" ADD CONSTRAINT "unique_seat_per_flight" UNIQUE ("flight", "seat");
