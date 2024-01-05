@@ -13,9 +13,9 @@ import {
   FlightInfo,
   Seat,
   TicketInfo,
+  Gender,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
-import { log } from "console";
 
 async function validateCredentials(email: string, password: string) {
   const credentialsValid = z
@@ -90,7 +90,13 @@ export async function loginUser(email: string, password: string) {
       return "Wrong password";
     }
 
-    await setIronSession(user.id, user.email, user.role, user.first_name, user.last_name);
+    await setIronSession(
+      user.id,
+      user.email,
+      user.role,
+      user.first_name,
+      user.last_name,
+    );
     return true;
   } catch (err) {
     console.error("Error logging in user", err);
@@ -120,9 +126,12 @@ async function setIronSession(
 export async function clearIronSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
+  session.userId = 0;
   session.isLoggedIn = false;
   session.username = "";
   session.role = "";
+  session.first_name = "";
+  session.last_name = "";
 
   await session.save();
 }
@@ -179,4 +188,23 @@ export async function getFreeSeats(flight_id: number, limit?: number) {
     SELECT * FROM "seats" WHERE flight_id = ${flight_id} AND is_occupied = false
   `;
   return seats;
+}
+
+export async function updateUserInfo(
+  session: SessionData,
+  first_name: string,
+  last_name: string,
+  middle_name: string,
+  phone: string,
+  gender: Gender,
+) {
+  const res = await sql`
+    UPDATE "user"
+    SET
+      first_name = ${first_name},
+      last_name = ${last_name},
+      middle_name = ${middle_name},
+      phone_number = ${phone},
+      gender = ${gender}
+    WHERE id = ${session.userId}`;
 }
