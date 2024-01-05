@@ -7,6 +7,7 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
+import { redirect } from "next/navigation";
 
 async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
@@ -57,6 +58,11 @@ function Order(order: TicketInfo) {
 
 export default async function Orders() {
   const session = await getSession();
+
+  if (!session.isLoggedIn) {
+    redirect("/login");
+  }
+
   const userId = session.userId;
 
   const orders = await getUserOrders(userId);
