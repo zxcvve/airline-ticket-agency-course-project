@@ -1,6 +1,6 @@
 // TODO: Rename interfaces to PascalCase
 
-type Gender = "Male" | "Female" | "Other";
+export type Gender = "Male" | "Female" | "Other";
 
 export interface user {
   id: number;
