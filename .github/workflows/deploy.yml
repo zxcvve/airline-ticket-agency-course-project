@@ -13,7 +13,6 @@ jobs:
   # This workflow contains a single job called "build"
 
   docker:
-    environment: SSH Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -32,32 +31,29 @@ jobs:
           push: true
           tags: ghcr.io/zxcvve/air_app:latest
 
-  # build:
-  #   environment: SSH Deploy
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
+  deploy:
+    environment: SSH Deploy
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
 
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     - name: Deploy using ssh
-  #       uses: appleboy/ssh-action@master
-  #       with:
-  #         host: ${{ secrets.HOST }}
-  #         username: ${{ secrets.USERNAME }}
-  #         key: ${{ secrets.PRIVATE_KEY }}
-  #         port: 22
-  #         script: |
-  #           cd /home/githubdeploy/airline-ticket-agency-course-project
-  #           git pull origin master
-  #           git status
-  #           docker stop air-app
-  #           docker rm air-app
-  #           docker rmi -f air-app
-  #           docker build -t air-app .
-  #           docker run -e DB_HOST=$secrets.DB_HOST \
-  #           -e DB_PASSWORD=$secrets.DB_PASSWORD \
-  #           -e DB_USER=$secrets.DB_USER \
-  #           -e DB_NAME=$secrets.DB_NAME \
-  #           -d -p 3000:3000 --name air-app air-app
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker stop air_app
+            docker rm air_app
+            docker rmi -f air_app
+            docker pull ghcr.io/zxcvve/air_app:latest
+            docker run -e DB_HOST=$secrets.DB_HOST \
+            -e DB_PASSWORD=$secrets.DB_PASSWORD \
+            -e DB_USER=$secrets.DB_USER \
+            -e DB_NAME=$secrets.DB_NAME \
+            -d -p 3000:3000 --name air_app air_app
 # TODO: attempt to reduce ram required to build image https://github.com/vercel/next.js/discussions/19198
 # TODO: fix iron session not working in production
