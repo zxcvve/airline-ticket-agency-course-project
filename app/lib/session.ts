@@ -5,6 +5,8 @@ export interface SessionData {
   username: string;
   isLoggedIn: boolean;
   role: string;
+  first_name: string;
+  last_name: string;
 }
 
 export const defaultSession: SessionData = {
@@ -12,6 +14,8 @@ export const defaultSession: SessionData = {
   username: "",
   isLoggedIn: false,
   role: "guest",
+  first_name: "",
+  last_name: "",
 };
 
 export const sessionOptions: SessionOptions = {

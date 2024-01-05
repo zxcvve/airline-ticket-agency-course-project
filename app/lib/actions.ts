@@ -39,17 +39,20 @@ export async function registerUser(email: string, password: string) {
   const hashedPassword = await bcrypt.hash(credentialsValid.password, 10);
 
   try {
-    // await sql`
-    //   INSERT INTO "user" (email, password) values (${credentialsValid.email}, ${hashedPassword})
-    // `;
-
     const res = await sql`
       SELECT insert_user(${credentialsValid.email}, ${hashedPassword})  
     `;
-    const [id, role] = res[0].insert_user.slice(1, -1).split(",");
-    await setIronSession(id, credentialsValid.email, role);
+    const [id, role, first_name, last_name] = res[0].insert_user
+      .slice(1, -1)
+      .split(",");
+    await setIronSession(
+      id,
+      credentialsValid.email,
+      role,
+      first_name,
+      last_name,
+    );
   } catch (err: any | PostgresError) {
-    // console.error("Error registering user", err);
     if (err.code == 23505) {
       return "Email already exists";
     }
@@ -87,7 +90,7 @@ export async function loginUser(email: string, password: string) {
       return "Wrong password";
     }
 
-    await setIronSession(user.id, user.email, user.role);
+    await setIronSession(user.id, user.email, user.role, user.first_name, user.last_name);
     return true;
   } catch (err) {
     console.error("Error logging in user", err);
@@ -95,13 +98,21 @@ export async function loginUser(email: string, password: string) {
   }
 }
 
-async function setIronSession(userId: number, email: string, role: string) {
+async function setIronSession(
+  userId: number,
+  email: string,
+  role: string,
+  first_name: string,
+  last_name: string,
+) {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
   session.userId = userId;
   session.isLoggedIn = true;
   session.username = email;
   session.role = role;
+  session.first_name = first_name;
+  session.last_name = last_name;
 
   await session.save();
 }

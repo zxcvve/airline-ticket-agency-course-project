@@ -8,11 +8,12 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 
-export default function UserDropdown() {
+export default function UserDropdown({ props }: any)  {
+  console.log(props)
   return (
     <Dropdown>
       <DropdownTrigger>
-        <User name="John Doe" />
+        <User name={props.first_name} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="account" href="/account">

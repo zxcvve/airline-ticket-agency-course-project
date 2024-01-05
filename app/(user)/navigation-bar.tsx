@@ -39,7 +39,7 @@ async function Content() {
 
       {session.isLoggedIn && (
         <NavbarItem>
-          <UserDropdown />
+          <UserDropdown props={session} />
         </NavbarItem>
       )}
     </>
