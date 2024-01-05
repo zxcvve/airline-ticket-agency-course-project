@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Node.js CD
+name: Build and Deploy
 
 # Controls when the action will run.
 on:
@@ -49,12 +47,10 @@ jobs:
           script: |
             docker stop air_app
             docker rm air_app
-            docker rmi -f air_app
+            docker rmi -f ghcr.io/zxcvve/air_app
             docker pull ghcr.io/zxcvve/air_app:latest
-            docker run -e DB_HOST=$secrets.DB_HOST \
-            -e DB_PASSWORD=$secrets.DB_PASSWORD \
-            -e DB_USER=$secrets.DB_USER \
-            -e DB_NAME=$secrets.DB_NAME \
+            docker run -e DB_HOST=${{secrets.DB_HOST}} \
+            -e DB_PASSWORD=${{secrets.DB_PASSWORD}} \
+            -e DB_USER=${{secrets.DB_USER}} \
+            -e DB_NAME=${{secrets.DB_NAME}} \
             -d -p 3000:3000 --name air_app ghcr.io/zxcvve/air_app:latest
-# TODO: attempt to reduce ram required to build image https://github.com/vercel/next.js/discussions/19198
-# TODO: fix iron session not working in production
