@@ -208,3 +208,21 @@ JOIN
   "airport" dep ON r.departure_airport = dep.id
 JOIN
   "airport" arr ON r.arrival_airport = arr.id;
+
+
+CREATE TYPE user_info AS (
+    id int,
+    role text
+);
+
+CREATE OR REPLACE FUNCTION insert_user(email text, password text)
+RETURNS user_info AS $$
+DECLARE
+    user_record user_info;
+BEGIN
+    INSERT INTO "user" (email, password) VALUES (email, password)
+    RETURNING id, role INTO user_record;
+    
+    RETURN user_record;
+END;
+$$ LANGUAGE plpgsql;
