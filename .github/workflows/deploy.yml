@@ -55,6 +55,6 @@ jobs:
             -e DB_PASSWORD=$secrets.DB_PASSWORD \
             -e DB_USER=$secrets.DB_USER \
             -e DB_NAME=$secrets.DB_NAME \
-            -d -p 3000:3000 --name air_app air_app
+            -d -p 3000:3000 --name air_app ghcr.io/zxcvve/air_app:latest
 # TODO: attempt to reduce ram required to build image https://github.com/vercel/next.js/discussions/19198
 # TODO: fix iron session not working in production
