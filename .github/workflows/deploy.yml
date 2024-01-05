@@ -33,7 +33,11 @@ jobs:
             docker rm air-app
             docker rmi -f air-app
             docker build -t air-app .
-            docker run -d -p 3000:3000 --name air-app air-app
+            docker run -e DB_HOST=$secrets.DB_HOST \
+            -e DB_PASSWORD=$secrets.DB_PASSWORD \
+            -e DB_USER=$secrets.DB_USER \
+            -e DB_NAME=$secrets.DB_NAME \
+            -d -p 3000:3000 --name air-app air-app
 
 # TODO: attempt to reduce ram required to build image https://github.com/vercel/next.js/discussions/19198
 # TODO: fix iron session not working in production
