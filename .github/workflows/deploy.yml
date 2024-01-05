@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ghcr.io/zxcvve/air-app:latest
+          tags: ghcr.io/zxcvve/air_app:latest
 
   # build:
   #   environment: SSH Deploy
