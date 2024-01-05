@@ -7,8 +7,15 @@ import { PostgresError } from "postgres";
 import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
 import { cookies } from "next/headers";
-import { user, flight, FlightInfo, Seat, TicketInfo } from "@/app/lib/definitions";
+import {
+  user,
+  flight,
+  FlightInfo,
+  Seat,
+  TicketInfo,
+} from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
+import { log } from "console";
 
 async function validateCredentials(email: string, password: string) {
   const credentialsValid = z
@@ -26,15 +33,21 @@ export async function registerUser(email: string, password: string) {
   const credentialsValid = await validateCredentials(email, password);
 
   if (!credentialsValid) {
-    return false;
+    return "Invalid credentials";
   }
 
   const hashedPassword = await bcrypt.hash(credentialsValid.password, 10);
 
   try {
-    await sql`
-      INSERT INTO "user" (email, password) values (${credentialsValid.email}, ${hashedPassword})    
+    // await sql`
+    //   INSERT INTO "user" (email, password) values (${credentialsValid.email}, ${hashedPassword})
+    // `;
+
+    const res = await sql`
+      SELECT insert_user(${credentialsValid.email}, ${hashedPassword})  
     `;
+    const [id, role] = res[0].insert_user.slice(1, -1).split(",");
+    await setIronSession(id, credentialsValid.email, role);
   } catch (err: any | PostgresError) {
     // console.error("Error registering user", err);
     if (err.code == 23505) {
