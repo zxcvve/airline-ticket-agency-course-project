@@ -1,6 +1,5 @@
 // TODO: Rename interfaces to PascalCase
 
-export type Gender = "Male" | "Female" | "Other";
 
 export interface user {
   id: number;
@@ -8,7 +7,7 @@ export interface user {
   first_name: string;
   middle_name: string;
   birthdate: Date;
-  gender: Gender;
+  isMale: boolean;
   phone_number: string;
   email: string;
   role: string;
@@ -95,9 +94,9 @@ export interface TicketInfo {
 }
 
 export interface Seat {
-  seat_id: number,
-  flight_id: number,
-  seat_number: number,
-  is_occupied: boolean,
-  passenger_id: number
+  seat_id: number;
+  flight_id: number;
+  seat_number: number;
+  is_occupied: boolean;
+  passenger_id: number;
 }
