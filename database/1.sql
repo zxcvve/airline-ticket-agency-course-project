@@ -1,5 +1,3 @@
-CREATE TYPE gender AS ENUM ('Male', 'Female', 'Other');
-
 CREATE TABLE "user" (
   "id" serial PRIMARY KEY,
   "last_name" text,
@@ -7,7 +5,7 @@ CREATE TABLE "user" (
   "first_name" text,
   "middle_name" text,
   "birthdate" date,
-  "gender" gender,
+  "ismale": BOOLEAN,
   "phone_number" text,
   "email" text unique,
   "role" text DEFAULT 'User'
