@@ -224,3 +224,17 @@ BEGIN
     RETURN user_record;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE VIEW "user_info_without_password" AS
+SELECT 
+  "id",
+  "last_name",
+  "first_name",
+  "middle_name",
+  "birthdate",
+  "ismale",
+  "phone_number",
+  "email",
+  "role"
+FROM 
+  "user";
