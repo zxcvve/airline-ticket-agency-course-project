@@ -143,6 +143,13 @@ export async function getUserOrders(userId: number) {
   return orders;
 }
 
+export async function getUserInfo(userId: number) {
+  const user: user[] = await sql`
+    SELECT * FROM "user" WHERE id = ${userId}
+  `;
+  return user[0];
+}
+
 export async function getFlightList() {
   const flights: flight[] = await sql`
     SELECT * FROM "flight"
@@ -204,7 +211,7 @@ export async function updateUserInfo(
       first_name = COALESCE(${first_name}, first_name),
       last_name = COALESCE(${last_name}, last_name),
       middle_name = COALESCE(${middle_name}, middle_name),
-      phone = COALESCE(${phone}, phone),
+      phone_number = COALESCE(${phone}, phone_number),
       gender = COALESCE(${gender}, gender)
     WHERE id = ${userId}
   `;
