@@ -18,7 +18,7 @@ export default function UserDropdown({ props }: any) {
         <DropdownItem key="account" href="/account">
           Аккаунт
         </DropdownItem>
-        <DropdownItem key="logout" href="api/auth/logout">
+        <DropdownItem key="logout" href="/api/auth/logout">
           Выйти
         </DropdownItem>
       </DropdownMenu>
