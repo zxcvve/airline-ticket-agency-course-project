@@ -1,15 +1,11 @@
 "use client";
 
-import sql from "@/app/lib/db";
 import { SessionData, defaultSession, sessionOptions } from "@/app/lib/session";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { useEffect, useState } from "react";
 import { getUserInfo, updateUserInfo } from "@/app/lib/actions";
-import { set } from "zod";
 import { redirectToLogin } from "../../lib/actions";
 
 export default function EditUserInfo() {
@@ -43,50 +39,50 @@ export default function EditUserInfo() {
   redirectToLogin();
 }
 
-async function handleSubmit(event: any, props: any) {
-  event.preventDefault();
-  console.log(event.target[1].value);
-  // console.log(
-  //   `${firstName} ${secondName} ${middleName} ${phone} ${gender.currentKey}`,
-  // );
-  // const res = updateUserInfo(
-  //   props.session.userId,
-  //   firstName,
-  //   secondName,
-  //   middleName,
-  //   phone,
-  //   [...gender.entries()][0][1],
-  // );
-}
-
-
-
 function Form(props: any) {
-  const genderList: string[] = ["Мужской", "Женский"];
-
-  useEffect(() => {
-    setFirstName(props.userInfo.first_name);
-    setSecondName(props.userInfo.second_name);
-    setMiddleName(props.userInfo.middle_name);
-    setPhone(props.userInfo.phone);
-    // setGender(props.userInfo.gender)
-  }, []);
-
   const [firstName, setFirstName] = useState<string>("");
   const [secondName, setSecondName] = useState<string>("");
   const [middleName, setMiddleName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [gender, setGender] = useState<any>("");
 
-  
-  function handleInputChange(event: any) {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
+  const [result, setResult] = useState<any>("");
 
+  const genderList = [
+    { id: 0, name: "Женский" },
+    { id: 1, name: "Мужской" },
+  ];
+
+  useEffect(() => {
+    setFirstName(props.userInfo.first_name);
+    setSecondName(props.userInfo.last_name);
+    setMiddleName(props.userInfo.middle_name);
+    setPhone(props.userInfo.phone_number);
+    setGender(props.userInfo.ismale ? ["1"] : ["0"]);
+  }, []);
+
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+    const firstName = event.target[0].value;
+    const secondName = event.target[1].value;
+    const middleName = event.target[2].value;
+    const phone = event.target[3].value;
+    const isMale = Number(event.target[4].value) ? true : false;
+
+    console.log(event.target[4]);
+
+    const session = await fetch("/api/auth/session").then((res) => res.json());
+
+    const res = await updateUserInfo(
+      session.userId,
+      firstName,
+      secondName,
+      middleName,
+      phone,
+      isMale,
+    );
+    setResult(res);
+  }
 
   return (
     <div className="">
@@ -135,31 +131,21 @@ function Form(props: any) {
           label="Пол"
         >
           {genderList.map((gender) => (
-            <SelectItem key={gender}>{gender}</SelectItem>
+            <SelectItem key={gender.id}>{gender.name}</SelectItem>
           ))}
         </Select>
 
         <div className="flex justify-center">
-          <Button
-            // onClick={() => {
-            //   console.log(
-            //     `${firstName} ${secondName} ${middleName} ${phone} ${gender.currentKey}`,
-            //   );
-            //   const res = updateUserInfo(
-            //     props.session.userId,
-            //     firstName,
-            //     secondName,
-            //     middleName,
-            //     phone,
-            //     [...gender.entries()][0][1]
-            //   )
-
-            // }}
-            className="w-fit flex justify-center"
-            type="submit"
-          >
+          <Button className="w-fit flex justify-center" type="submit">
             Сохранить
           </Button>
+        </div>
+        <div className="justify-center flex p-4">
+          {result && (
+            <>
+              <p className="text-sm text-green-500">{result}</p>
+            </>
+          )}
         </div>
       </form>
     </div>
