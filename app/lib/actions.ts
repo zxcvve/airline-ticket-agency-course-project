@@ -13,7 +13,6 @@ import {
   FlightInfo,
   Seat,
   TicketInfo,
-  Gender,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 
@@ -203,16 +202,21 @@ export async function updateUserInfo(
   last_name: string | null,
   middle_name: string | null,
   phone: string | null,
-  gender: Gender | null,
+  isMale: boolean | null,
 ) {
-  await sql`
+  try {
+    const res = await sql`
     UPDATE "user"
     SET 
       first_name = COALESCE(${first_name}, first_name),
       last_name = COALESCE(${last_name}, last_name),
       middle_name = COALESCE(${middle_name}, middle_name),
       phone_number = COALESCE(${phone}, phone_number),
-      gender = COALESCE(${gender}, gender)
+      isMale = COALESCE(${isMale}, isMale)
     WHERE id = ${userId}
   `;
+    return "Успешно обновлено";
+  } catch (err) {
+    return "Произошла ошибка";
+  }
 }
