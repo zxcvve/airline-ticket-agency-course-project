@@ -13,6 +13,18 @@ export interface user {
   password: string;
 }
 
+export interface userWithoutPassword {
+  id: number;
+  last_name: string;
+  first_name: string;
+  middle_name: string;
+  birthdate: Date;
+  ismale: boolean;
+  phone_number: string;
+  email: string;
+  role: string;
+}
+
 export interface airplane {
   id: number;
   model: string;

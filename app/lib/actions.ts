@@ -13,6 +13,7 @@ import {
   FlightInfo,
   Seat,
   TicketInfo,
+  userWithoutPassword,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 
@@ -52,6 +53,7 @@ export async function registerUser(email: string, password: string) {
       last_name,
     );
   } catch (err: any | PostgresError) {
+    console.log(err)
     if (err.code == 23505) {
       return "Email already exists";
     }
@@ -144,8 +146,8 @@ export async function getUserOrders(userId: number) {
 }
 
 export async function getUserInfo(userId: number) {
-  const user: user[] = await sql`
-    SELECT * FROM "user" WHERE id = ${userId}
+  const user: userWithoutPassword[] = await sql`
+    SELECT * FROM "user_info_without_password" WHERE id = ${userId}
   `;
   return user[0];
 }
