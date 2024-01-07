@@ -58,6 +58,7 @@ export async function registerUser(email: string, password: string) {
 
     return "Unknown error";
   }
+  return 0;
 }
 
 export async function loginUser(email: string, password: string) {
