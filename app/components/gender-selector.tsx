@@ -2,7 +2,7 @@
 
 import { Select, SelectItem } from "@nextui-org/select";
 
-const genderList: string[] = ["Мужской", "Женский", "Другой"];
+const genderList: string[] = ["Мужской", "Женский"];
 
 export default function GenderSelector() {
   return (
