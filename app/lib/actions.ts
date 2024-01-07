@@ -191,20 +191,21 @@ export async function getFreeSeats(flight_id: number, limit?: number) {
 }
 
 export async function updateUserInfo(
-  session: SessionData,
-  first_name: string,
-  last_name: string,
-  middle_name: string,
-  phone: string,
-  gender: Gender,
+  userId: number,
+  first_name: string | null,
+  last_name: string | null,
+  middle_name: string | null,
+  phone: string | null,
+  gender: Gender | null,
 ) {
-  const res = await sql`
+  await sql`
     UPDATE "user"
-    SET
-      first_name = ${first_name},
-      last_name = ${last_name},
-      middle_name = ${middle_name},
-      phone_number = ${phone},
-      gender = ${gender}
-    WHERE id = ${session.userId}`;
+    SET 
+      first_name = COALESCE(${first_name}, first_name),
+      last_name = COALESCE(${last_name}, last_name),
+      middle_name = COALESCE(${middle_name}, middle_name),
+      phone = COALESCE(${phone}, phone),
+      gender = COALESCE(${gender}, gender)
+    WHERE id = ${userId}
+  `;
 }
