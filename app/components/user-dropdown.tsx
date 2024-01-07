@@ -9,7 +9,6 @@ import {
 } from "@nextui-org/dropdown";
 
 export default function UserDropdown({ props }: any)  {
-  console.log(props)
   return (
     <Dropdown>
       <DropdownTrigger>
