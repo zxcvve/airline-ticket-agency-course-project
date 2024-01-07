@@ -15,7 +15,7 @@ export async function handleRegister(prevState: any, formData: FormData) {
   const password = formData.get("password") as string;
   const res = await registerUser(email, password);
   if (res === 0) {
-    redirect("/account");
+    redirect("/account/edit");
   }
   return res;
 }
