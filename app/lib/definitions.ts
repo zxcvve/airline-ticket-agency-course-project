@@ -1,6 +1,5 @@
 // TODO: Rename interfaces to PascalCase
 
-
 export interface user {
   id: number;
   last_name: string;

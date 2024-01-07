@@ -8,7 +8,7 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 
-export default function UserDropdown({ props }: any)  {
+export default function UserDropdown({ props }: any) {
   return (
     <Dropdown>
       <DropdownTrigger>

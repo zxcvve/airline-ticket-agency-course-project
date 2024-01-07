@@ -2,7 +2,6 @@
 
 import { Input } from "@nextui-org/input";
 
-
 export default function PhoneNumberInput() {
   return (
     <Input

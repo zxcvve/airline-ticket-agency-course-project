@@ -5,5 +5,5 @@ export default function FlightSearch() {
     <div className="">
       <FlightSearchBar />
     </div>
-  )
+  );
 }
