@@ -69,7 +69,6 @@ function Form(props: any) {
     const phone = event.target[3].value;
     const isMale = Number(event.target[4].value) ? true : false;
 
-    console.log(event.target[4]);
 
     const session = await fetch("/api/auth/session").then((res) => res.json());
     // TODO: revalidate tag to update user info on navigation bar without page reload

@@ -14,6 +14,9 @@ import {
   Seat,
   TicketInfo,
   userWithoutPassword,
+  airplane,
+  airport,
+  route,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 import { revalidateTag } from "next/cache";
@@ -54,7 +57,7 @@ export async function registerUser(email: string, password: string) {
       last_name,
     );
   } catch (err: any | PostgresError) {
-    console.log(err)
+    console.log(err);
     if (err.code == 23505) {
       return "Email already exists";
     }
@@ -224,4 +227,90 @@ export async function updateUserInfo(
   } catch (err) {
     return "Произошла ошибка";
   }
+}
+
+export async function getUsers() {
+  const users: userWithoutPassword[] = await sql`
+    SELECT * FROM "user_info_without_password"
+  `;
+  return users;
+}
+
+export async function getAirplanes() {
+  const airplanes: airplane[] = await sql`
+    SELECT * FROM "airplane"
+  `;
+  return airplanes;
+}
+
+export async function getAirplaneInfo(id: number) {
+  const airplanes: airplane[] = await sql`
+    SELECT * FROM "airplane" WHERE id = ${id}
+  `;
+  return airplanes[0];
+}
+
+export async function updateAirplaneInfo(id: number, model: string, reg_number: string){
+try {
+    const res = await sql`
+      UPDATE "airplane"
+      SET 
+        model = ${model},
+        reg_number = ${reg_number}
+      WHERE id = ${id}
+    `;
+    return "Успешно обновлено";
+} catch (error) {
+  return "Произошла ошибка";
+}
+}
+
+
+export async function getAirports() {
+  const airports: airport[] = await sql`
+    SELECT * FROM "airport"
+  `;
+  return airports;
+}
+
+export async function getFlights() {
+  const flights: flight[] = await sql`
+    SELECT * FROM "flight"
+  `;
+  return flights;
+}
+
+// export async function getPrices(){
+//   const prices: TicketInfo[] = await sql`
+//     SELECT * FROM "ticket_info"
+//   `;
+//   return prices;
+// }
+
+export async function getTickets() {
+  const tickets: TicketInfo[] = await sql`
+    SELECT * FROM "ticket_info"
+  `;
+  return tickets;
+}
+
+export async function getTicketInfo(id: number) {
+  const tickets: TicketInfo[] = await sql`
+    SELECT * FROM "ticket_info" WHERE ticket_id = ${id}
+  `;
+  return tickets[0];
+}
+
+export async function getRoutes() {
+  const routes: route[] = await sql`
+    SELECT * FROM "route"
+  `;
+  return routes;
+}
+
+export async function getRoute(id: number) {
+  const routes: route[] = await sql`
+    SELECT * FROM "route" WHERE id = ${id}
+  `;
+  return routes[0];
 }
