@@ -54,7 +54,7 @@ async function getCookie(name: string) {
 
 async function getUrl() {
   const url =
-    process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+    process.env.NODE_ENV === "production" ? process.env.URL : "http://localhost:3000";
   return url;
 }
 
