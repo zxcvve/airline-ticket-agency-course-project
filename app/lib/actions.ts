@@ -16,6 +16,7 @@ import {
   userWithoutPassword,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 async function validateCredentials(email: string, password: string) {
   const credentialsValid = z
@@ -218,6 +219,7 @@ export async function updateUserInfo(
       isMale = COALESCE(${isMale}, isMale)
     WHERE id = ${userId}
   `;
+    revalidateTag("userData");
     return "Успешно обновлено";
   } catch (err) {
     return "Произошла ошибка";

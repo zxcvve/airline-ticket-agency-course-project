@@ -65,6 +65,9 @@ export default async function NavigationBar() {
     headers: {
       Cookie: `air-app-session=${cookie};`,
     },
+    next: {
+      tags: ["userData"]
+    }
   }).then((res) => res.json());
 
   return (
