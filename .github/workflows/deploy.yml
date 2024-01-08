@@ -54,4 +54,5 @@ jobs:
             -e DB_USER=${{secrets.DB_USER}} \
             -e DB_NAME=${{secrets.DB_NAME}} \
             -e SESSION_PASSWORD=${{secrets.SESSION_PASSWORD}} \
+            -e URL=${{secrets.URL}} \
             -d -p 3000:3000 --name air_app ghcr.io/zxcvve/air_app:latest
