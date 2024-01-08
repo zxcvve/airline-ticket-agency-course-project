@@ -52,8 +52,10 @@ async function getCookie(name: string) {
   return cookies().get(name)?.value ?? "";
 }
 
-async function getUrl(){
-  const url = process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+async function getUrl() {
+  const url =
+    process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+  return url;
 }
 
 export default async function NavigationBar() {
