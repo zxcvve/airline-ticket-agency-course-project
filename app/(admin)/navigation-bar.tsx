@@ -79,7 +79,7 @@ export default async function NavigationBar() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href={"/"}>Главная</Link>
+          <Link href={"/admin"}>Главная</Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
