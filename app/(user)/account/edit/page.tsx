@@ -72,7 +72,7 @@ function Form(props: any) {
     console.log(event.target[4]);
 
     const session = await fetch("/api/auth/session").then((res) => res.json());
-
+    // TODO: revalidate tag to update user info on navigation bar without page reload
     const res = await updateUserInfo(
       session.userId,
       firstName,
