@@ -1,3 +1,5 @@
+"use server";
+
 import {
   Navbar,
   NavbarBrand,
@@ -8,7 +10,7 @@ import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 // import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@nextui-org/react";
 import UserDropdown from "../components/user-dropdown";
@@ -19,9 +21,9 @@ async function getSession() {
   return session;
 }
 
-async function Content() {
+async function Content(props: any) {
   const session = await getSession();
-
+  const userData = props;
   return (
     <>
       {!session.isLoggedIn && (
@@ -39,18 +41,36 @@ async function Content() {
 
       {session.isLoggedIn && (
         <NavbarItem>
-          <UserDropdown />
+          <UserDropdown props={userData} />
         </NavbarItem>
       )}
     </>
   );
 }
 
-export default function NavigationBar() {
-  // const {session, isLoading} = useSession();
+async function getCookie(name: string) {
+  return cookies().get(name)?.value ?? "";
+}
 
-  // TODO: find a way to use environment variables in github actions
-  // const indexPath = "https://zxcvve.github.io/airline-ticket-agency-course-project/";
+async function getUrl() {
+  const url =
+    process.env.NODE_ENV === "production"
+      ? process.env.URL
+      : "http://localhost:3000";
+  return url;
+}
+
+export default async function NavigationBar() {
+  const cookie = await getCookie("air-app-session");
+  const url = await getUrl();
+  const userData = await fetch(`${url}/api/auth/me`, {
+    headers: {
+      Cookie: `air-app-session=${cookie};`,
+    },
+    next: {
+      tags: ["userData"],
+    },
+  }).then((res) => res.json());
 
   return (
     <Navbar>
@@ -59,23 +79,12 @@ export default function NavigationBar() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href={"/admin"}>Главная</Link>
+          <Link href={"/"}>Главная</Link>
         </NavbarItem>
-        {/* <NavbarItem>
-          <Link href="/orders" aria-current="page">
-            Заказы
-          </Link>
-        </NavbarItem> */}
-        {/*<NavbarItem>*/}
-        {/*  <Link color="foreground" href="#">*/}
-        {/*    Integrations*/}
-        {/*  </Link>*/}
-        {/*</NavbarItem>*/}
       </NavbarContent>
       <NavbarContent justify="end">
-        <Content />
+        <Content props={userData} />
       </NavbarContent>
-      {/*<Content/>*/}
     </Navbar>
   );
 }
