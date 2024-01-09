@@ -13,6 +13,9 @@ export async function handleLogin(prevState: any, formData: FormData) {
 export async function handleRegister(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  if (password.length < 8) {
+    return "Пароль должен быть не менее 8 символов";
+  }
   const res = await registerUser(email, password);
   if (res === 0) {
     redirect("/account/edit");
