@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
-import AirplaneTable from "./airplanes-table";
+import AirplanesTable from "./airplanes-table";
 
 export default async function AirplaneList() {
   const airplanes = await getAirplanes();
@@ -35,7 +35,7 @@ export default async function AirplaneList() {
   return (
     <div>
       <h1>Список самолетов</h1>
-      <AirplaneTable airplanes={airplanes} columns={tableColumns} />
+      <AirplanesTable airplanes={airplanes} columns={tableColumns} />
     </div>
   );
 }

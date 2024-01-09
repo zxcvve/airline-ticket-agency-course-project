@@ -1,6 +1,6 @@
 "use client";
 
-import { airplane } from "@/app/lib/definitions";
+import { airport } from "@/app/lib/definitions";
 import { getKeyValue } from "@nextui-org/react";
 import {
   Table,
@@ -12,12 +12,12 @@ import {
 } from "@nextui-org/table";
 import Link from "next/link";
 
-export default function AirplanesTable(data: any) {
+export default function AirportsTable(data: any) {
   const columns: {
     key: string;
     label: string;
   }[] = data.columns;
-  const rows: airplane[] = data.airplanes;
+  const rows: airport[] = data.airports;
   return (
     <Table>
       <TableHeader columns={columns}>
@@ -29,7 +29,7 @@ export default function AirplanesTable(data: any) {
           <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>
-                <Link href={`airplanes/${item.id}`}>
+                <Link href={`airports/${item.id}`}>
                   {getKeyValue(item, columnKey)}
                 </Link>
               </TableCell>
