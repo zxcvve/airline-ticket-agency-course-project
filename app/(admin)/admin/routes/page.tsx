@@ -10,18 +10,17 @@ export default async function RouteList() {
       label: "ID",
     },
     {
-      key:"departure_airport_name",
+      key: "departure_airport_name",
       label: "Откуда",
     },
     {
-      key:"arrival_airport_name",
+      key: "arrival_airport_name",
       label: "Куда",
     },
     {
-      key:"flight_duration",
+      key: "flight_duration",
       label: "Время в пути",
-    }
-  
+    },
   ];
 
   return (
@@ -29,5 +28,5 @@ export default async function RouteList() {
       <h1>Список маршрутов</h1>
       <RoutesTable columns={tableColumns} routes={routes} />
     </div>
-  )
+  );
 }
