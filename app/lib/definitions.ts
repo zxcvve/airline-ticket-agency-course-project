@@ -70,10 +70,7 @@ export interface airport {
   city: string;
   country: string;
   address: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
+  coordinates: string
 }
 
 export interface FlightInfo {
