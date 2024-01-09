@@ -11,11 +11,14 @@ import { userWithoutPassword } from "../lib/definitions";
 
 export default function UserDropdown({ props }: any) {
   const userInfo: userWithoutPassword = props.props;
+  const first_name = userInfo.first_name ?? "";
+  const last_name = userInfo.last_name ?? "";
+  let name = first_name && last_name ? `${first_name} ${last_name}` : "";
 
   return (
     <Dropdown>
       <DropdownTrigger>
-        <User name={`${userInfo.first_name} ${userInfo.last_name}`} />
+        <User name={name} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="account" href="/account">
