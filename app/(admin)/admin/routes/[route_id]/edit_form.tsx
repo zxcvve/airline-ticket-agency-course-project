@@ -10,33 +10,7 @@ import {
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { updateRouteInfo } from "@/app/lib/actions";
-
-function AirportAutocomplete({
-  airports,
-  fun,
-  label,
-  selectedKey,
-  name,
-}: {
-  airports: Airport[];
-  fun: any;
-  label: string;
-  selectedKey: number;
-  name: string;
-}) {
-  return (
-    <Autocomplete
-      label={label}
-      onSelectionChange={fun}
-      selectedKey={String(selectedKey)}
-      defaultItems={airports}
-    >
-      {(airport) => (
-        <AutocompleteItem key={airport.id}>{airport.title}</AutocompleteItem>
-      )}
-    </Autocomplete>
-  );
-}
+import AirportAutocomplete from "@/app/components/airport-autocomplete";
 
 export default function EditRouteForm({
   route,
