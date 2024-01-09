@@ -29,7 +29,7 @@ export default function RoutesTable(data: any) {
           <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>
-                <Link href={`airports/${item.id}`}>
+                <Link href={`routes/${item.id}`}>
                   {getKeyValue(item, columnKey)}
                 </Link>
               </TableCell>
