@@ -233,7 +233,7 @@ export async function updateUserInfo(
     } catch (err) {}
   }
 
-  if(email) {
+  if (email) {
     try {
       const res = await sql`
       UPDATE "user"
@@ -398,7 +398,7 @@ export async function updateRouteInfo(
         SET 
           departure_airport = ${from},
           arrival_airport = ${to},
-          flight_duration = ${duration},
+          flight_duration = ${duration}
         WHERE id = ${id}
       `;
     revalidatePath("/admin/routes");
