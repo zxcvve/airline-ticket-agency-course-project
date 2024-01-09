@@ -88,7 +88,7 @@ export interface FlightInfo {
   departure_airport: string;
   arrival_airport: string;
   flight_duration: number;
-  current_price: string;
+  current_price: number;
 }
 
 export interface TicketInfo {
