@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/button";
 import { FlightInfo, Seat } from "../lib/definitions";
 import { Input } from "@nextui-org/input";
 import { redirectToLogin } from "@/app/(user)/lib/actions";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Select, SelectItem } from "@nextui-org/react";
 
 import { SessionData, defaultSession } from "@/app/lib/session";
 import { use, useEffect, useState } from "react";
@@ -22,23 +22,24 @@ function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
   }, [flight_id]);
 
   return (
-    <Select
+    <Autocomplete
       label="Место"
       isRequired
-      items={seats}
-      selectedKeys={seat}
-      onChange={onSeatSelect}
+      selectedKey={seat}
+      defaultItems={seats}
+      onSelectionChange={onSeatSelect}
+      value={seat}
     >
       {(seat) => (
-        <SelectItem
+        <AutocompleteItem
           key={seat.seat_id}
           value={seat.seat_id}
           textValue={String(seat.seat_number)}
         >
           {seat.seat_number}
-        </SelectItem>
+        </AutocompleteItem>
       )}
-    </Select>
+    </Autocomplete>
   );
 }
 
@@ -83,7 +84,7 @@ function Form(props: any) {
 
   const [selectedSeat, setSelectedSeat] = useState<any>();
 
-  const seatNumber = selectedSeat?.target.value;
+  // const seatNumber = selectedSeat?.target.value;
 
   return (
     <Card className="" isHoverable={true}>
@@ -103,17 +104,17 @@ function Form(props: any) {
       <CardFooter className="justify-center">
         <SeatSelect
           flight_id={flight.flight_id}
-          seat=""
+          seat={selectedSeat}
           onSeatSelect={setSelectedSeat}
         />
         <Button
           onClick={() => {
-            if (seatNumber) {
+            if (selectedSeat) {
               const res = newOrder(
                 session.userId,
                 flight.flight_id,
                 price_number,
-                seatNumber,
+                selectedSeat,
               );
             }
           }}

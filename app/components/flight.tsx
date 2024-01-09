@@ -13,24 +13,25 @@ export default function FlightItem(flight: FlightInfo) {
 
   return (
     <Card className="" isHoverable={true}>
-      <CardBody className="flex flex-row ">
+      <CardBody className="grid grid-cols-4 gap-6 items-center justify-center">
         <p>{flight.airplane_model}</p>
-        <Divider orientation="vertical" className="px-4" />
         <p>
           {flight.departure_airport} <br />
           {flight_departure_date} {flight_departure_time}
         </p>
-        <Divider orientation="vertical" className="px-4" />
         <p>
           {flight.arrival_airport} <br />
           {flight_arrival_date} {flight_arrival_time}
         </p>
-      </CardBody>
-      <CardFooter className="justify-center">
         <Link href={`/new-order/${flight.flight_id}`}>
           <Button>Купить {flight.current_price}</Button>
         </Link>
-      </CardFooter>
+      </CardBody>
+      {/* <CardFooter className="justify-center">
+        <Link href={`/new-order/${flight.flight_id}`}>
+          <Button>Купить {flight.current_price}</Button>
+        </Link>
+      </CardFooter> */}
     </Card>
   );
 }
