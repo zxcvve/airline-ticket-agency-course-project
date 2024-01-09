@@ -11,6 +11,8 @@ export default function FlightItem(flight: FlightInfo) {
   const flight_departure_time = flight.departure_time.toLocaleTimeString();
   const flight_arrival_time = flight.arrival_time.toLocaleTimeString();
 
+  const flight_price_rub = flight.current_price /100;
+
   return (
     <Card className="" isHoverable={true}>
       <CardBody className="grid grid-cols-4 gap-6 items-center justify-center">
@@ -24,7 +26,7 @@ export default function FlightItem(flight: FlightInfo) {
           {flight_arrival_date} {flight_arrival_time}
         </p>
         <Link href={`/new-order/${flight.flight_id}`}>
-          <Button>Купить {flight.current_price}</Button>
+          <Button>Купить {flight_price_rub}₽</Button>
         </Link>
       </CardBody>
       {/* <CardFooter className="justify-center">
