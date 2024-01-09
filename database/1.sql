@@ -46,8 +46,9 @@ CREATE TABLE "ticket" (
   "id" serial PRIMARY KEY,
   "passenger" int,
   "flight" int,
-  "price" money,
-  "seat" int
+  "price" bigint,
+  "seat" int,
+  "purchase_date" TIMESTAMPTZ DEFAULT NOW();
 );
 
 CREATE TABLE "airport" (
@@ -63,7 +64,7 @@ CREATE TABLE "price" (
     "id" serial PRIMARY KEY,
     "flight_id" INT,
     "time_left_threshold" interval,
-    base_price MONEY,
+    base_price bigint,
     FOREIGN KEY (flight_id) REFERENCES flight(id)
 );
 
@@ -251,3 +252,21 @@ JOIN
   "airport" dep ON r."departure_airport" = dep."id"
 JOIN 
   "airport" arr ON r."arrival_airport" = arr."id";
+
+CREATE PROCEDURE insert_flight(
+  p_flight_number INT, 
+  p_departure_time TIMESTAMPTZ, 
+  p_airplane INT, 
+  p_route INT
+) LANGUAGE plpgsql AS $$
+DECLARE
+  v_flight_duration INTERVAL;
+  v_arrival_time TIMESTAMPTZ;
+BEGIN
+  SELECT flight_duration INTO v_flight_duration FROM route WHERE id = p_route;
+
+  v_arrival_time := p_departure_time + v_flight_duration;
+
+  INSERT INTO flight (flight_number, departure_time, arrival_time, airplane, route)
+  VALUES (p_flight_number, p_departure_time, v_arrival_time, p_airplane, p_route);
+END $$;
