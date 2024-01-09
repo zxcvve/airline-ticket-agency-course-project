@@ -62,6 +62,10 @@ export default async function FlightList() {
       key: "current_price",
       label: "Цена",
     },
+    {
+      key:"actions",
+      label: "Действия"
+    }
   ];
 
   return (

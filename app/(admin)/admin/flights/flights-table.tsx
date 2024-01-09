@@ -1,19 +1,16 @@
 "use client";
 
-import { FlightInfo } from "@/app/lib/definitions";
-import { getKeyValue } from "@nextui-org/react";
+import { Button, getKeyValue } from "@nextui-org/react";
 import {
   Table,
-  TableHeader,
   TableBody,
-  TableColumn,
-  TableRow,
   TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@nextui-org/table";
 import Link from "next/link";
 import { ProcessedFlightInfo } from "./page";
-
-
 
 export default function FlightsTable(data: any) {
   const columns: {
@@ -21,6 +18,16 @@ export default function FlightsTable(data: any) {
     label: string;
   }[] = data.columns;
   const rows: ProcessedFlightInfo[] = data.flights;
+
+  function renderCell(item: any, columnKey: any) {
+    return (
+      <Link href={`flights/${item.flight_id}`}>
+        {getKeyValue(item, columnKey)}
+        {/* TODO: Реализовать удаление полёта */}
+        {columnKey === "actions" && <Button size="sm">Удалить</Button>}
+      </Link>
+    );
+  }
 
   return (
     <Table>
@@ -32,11 +39,7 @@ export default function FlightsTable(data: any) {
         {(item) => (
           <TableRow key={item.flight_id}>
             {(columnKey) => (
-              <TableCell>
-                <Link href={`flights/${item.flight_id}`}>
-                  {getKeyValue(item, columnKey)}
-                </Link>
-              </TableCell>
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}
