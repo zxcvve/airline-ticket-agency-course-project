@@ -48,6 +48,13 @@ export interface route {
   flight_duration: string;
 }
 
+export interface RouteInfo{
+  id: number;
+  departure_airport_name: string;
+  arrival_airport_name: string;
+  flight_duration: string;
+} 
+
 export interface ticketPrice {
   id: number;
   flight: number;

@@ -238,3 +238,16 @@ SELECT
   "role"
 FROM 
   "user";
+
+CREATE VIEW "route_info" AS
+SELECT 
+  r."id",
+  dep."title" AS "departure_airport_name",
+  arr."title" AS "arrival_airport_name",
+  r."flight_duration"
+FROM 
+  "route" r
+JOIN 
+  "airport" dep ON r."departure_airport" = dep."id"
+JOIN 
+  "airport" arr ON r."arrival_airport" = arr."id";

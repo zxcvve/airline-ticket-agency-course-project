@@ -17,6 +17,7 @@ import {
   airplane,
   airport,
   route,
+  RouteInfo,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -372,8 +373,8 @@ export async function getTicketInfo(id: number) {
 }
 
 export async function getRoutes() {
-  const routes: route[] = await sql`
-    SELECT * FROM "route"
+  const routes: RouteInfo[] = await sql`
+    SELECT * FROM "route_info" ORDER BY id
   `;
   return routes;
 }
