@@ -1,7 +1,7 @@
 "use client";
 
 import { updateAirplaneInfo, updateUserInfo } from "@/app/lib/actions";
-import { airplane, userWithoutPassword } from "@/app/lib/definitions";
+import { Airplane, UserWithoutPassword } from "@/app/lib/definitions";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { Select, SelectItem } from "@nextui-org/select";
 export default function EditUserForm({
   props,
 }: {
-  props: userWithoutPassword;
+  props: UserWithoutPassword;
 }) {
   const [firstName, setFirstName] = useState(props.first_name);
   const [lastName, setLastName] = useState(props.last_name);

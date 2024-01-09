@@ -8,15 +8,15 @@ import { getIronSession } from "iron-session";
 import { SessionData, sessionOptions } from "@/app/lib/session";
 import { cookies } from "next/headers";
 import {
-  user,
-  flight,
+  User,
+  Flight,
   FlightInfo,
   Seat,
   TicketInfo,
-  userWithoutPassword,
-  airplane,
-  airport,
-  route,
+  UserWithoutPassword,
+  Airplane,
+  Airport,
+  Route,
   RouteInfo,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
@@ -85,7 +85,7 @@ export async function loginUser(email: string, password: string) {
       return "No user found with that email";
     }
 
-    const user: user = users[0] as user;
+    const user: User = users[0] as User;
 
     const passwordMatches = await bcrypt.compare(
       credentialsValid.password,
@@ -151,21 +151,21 @@ export async function getUserOrders(userId: number) {
 }
 
 export async function getUserInfo(userId: number) {
-  const user: userWithoutPassword[] = await sql`
+  const user: UserWithoutPassword[] = await sql`
     SELECT * FROM "user_info_without_password" WHERE id = ${userId}
   `;
   return user[0];
 }
 
 export async function getUsersList() {
-  const user: userWithoutPassword[] = await sql`
+  const user: UserWithoutPassword[] = await sql`
     SELECT * FROM "user_info_without_password" ORDER BY id
   `;
   return user;
 }
 
 export async function getFlightList() {
-  const flights: flight[] = await sql`
+  const flights: Flight[] = await sql`
     SELECT * FROM "flight"
   `;
   return flights;
@@ -264,21 +264,21 @@ export async function updateUserInfo(
 }
 
 export async function getUsers() {
-  const users: userWithoutPassword[] = await sql`
+  const users: UserWithoutPassword[] = await sql`
     SELECT * FROM "user_info_without_password"
   `;
   return users;
 }
 
 export async function getAirplanes() {
-  const airplanes: airplane[] = await sql`
+  const airplanes: Airplane[] = await sql`
     SELECT * FROM "airplane" ORDER BY id
   `;
   return airplanes;
 }
 
 export async function getAirplaneInfo(id: number) {
-  const airplanes: airplane[] = await sql`
+  const airplanes: Airplane[] = await sql`
     SELECT * FROM "airplane" WHERE id = ${id}
   `;
   return airplanes[0];
@@ -305,14 +305,14 @@ export async function updateAirplaneInfo(
 }
 
 export async function getAirports() {
-  const airports: airport[] = await sql`
+  const airports: Airport[] = await sql`
     SELECT * FROM "airport" ORDER BY id
   `;
   return airports;
 }
 
 export async function getAirportInfo(id: number) {
-  const airports: airport[] = await sql`
+  const airports: Airport[] = await sql`
     SELECT * FROM "airport" WHERE id = ${id}
   `;
   return airports[0];
@@ -345,7 +345,7 @@ export async function updateAirportInfo(
 }
 
 export async function getFlights() {
-  const flights: flight[] = await sql`
+  const flights: Flight[] = await sql`
     SELECT * FROM "flight"
   `;
   return flights;
@@ -380,8 +380,30 @@ export async function getRoutes() {
 }
 
 export async function getRoute(id: number) {
-  const routes: route[] = await sql`
+  const routes: Route[] = await sql`
     SELECT * FROM "route" WHERE id = ${id}
   `;
   return routes[0];
+}
+
+export async function updateRouteInfo(
+  id: number,
+  from: number,
+  to: number,
+  duration: string,
+) {
+  try {
+    const res = await sql`
+        UPDATE "route"
+        SET 
+          departure_airport = ${from},
+          arrival_airport = ${to},
+          flight_duration = ${duration},
+        WHERE id = ${id}
+      `;
+    revalidatePath("/admin/routes");
+    return "Успешно обновлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
 }

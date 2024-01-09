@@ -1,6 +1,6 @@
 "use client";
 
-import { airport, userWithoutPassword } from "@/app/lib/definitions";
+import { Airport, UserWithoutPassword } from "@/app/lib/definitions";
 import { getKeyValue } from "@nextui-org/react";
 import {
   Table,
@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/table";
 import Link from "next/link";
 
-interface processedUser extends userWithoutPassword {
+interface processedUser extends UserWithoutPassword {
   gender: string;
 }
 

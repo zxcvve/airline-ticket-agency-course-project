@@ -1,12 +1,12 @@
 "use client";
 
 import { updateAirportInfo } from "@/app/lib/actions";
-import { airport } from "@/app/lib/definitions";
+import { Airport } from "@/app/lib/definitions";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
 
-export default function EditAirportForm({ props }: { props: airport }) {
+export default function EditAirportForm({ props }: { props: Airport }) {
   const [title, setTitle] = useState(props.title);
   const [city, setCity] = useState(props.city);
   const [country, setCountry] = useState(props.country);

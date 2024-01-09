@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Route, airport } from "@/app/lib/definitions";
+import { Route, Airport } from "@/app/lib/definitions";
 import {
   Autocomplete,
   AutocompleteSection,
@@ -18,7 +18,7 @@ function AirportAutocomplete({
   selectedKey,
   name,
 }: {
-  airports: airport[];
+  airports: Airport[];
   fun: any;
   label: string;
   selectedKey: number;
@@ -43,7 +43,7 @@ export default function EditRouteForm({
   airports,
 }: {
   route: Route;
-  airports: airport[];
+  airports: Airport[];
 }) {
   const [departureAirport, setDepartureAirport] = useState(
     route.departure_airport,

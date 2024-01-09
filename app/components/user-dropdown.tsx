@@ -7,10 +7,10 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/dropdown";
-import { userWithoutPassword } from "../lib/definitions";
+import { UserWithoutPassword } from "../lib/definitions";
 
 export default function UserDropdown({ props }: any) {
-  const userInfo: userWithoutPassword = props.props;
+  const userInfo: UserWithoutPassword = props.props;
   const first_name = userInfo.first_name ?? "";
   const last_name = userInfo.last_name ?? "";
   let name = first_name && last_name ? `${first_name} ${last_name}` : "";

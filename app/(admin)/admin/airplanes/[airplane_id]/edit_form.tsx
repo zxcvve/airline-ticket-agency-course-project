@@ -1,14 +1,14 @@
 "use client";
 
 import { updateAirplaneInfo } from "@/app/lib/actions";
-import { airplane } from "@/app/lib/definitions";
+import { Airplane } from "@/app/lib/definitions";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
 
 
 
-export default function EditAirplaneForm({ props }: { props: airplane }) {
+export default function EditAirplaneForm({ props }: { props: Airplane }) {
   const [model, setModel] = useState(props.model);
   const [reg_number, setReg_number] = useState(props.reg_number);
   const [seats, setSeats] = useState(props.seats);

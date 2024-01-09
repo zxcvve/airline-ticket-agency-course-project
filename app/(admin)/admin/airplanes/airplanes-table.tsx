@@ -1,6 +1,6 @@
 "use client";
 
-import { airplane } from "@/app/lib/definitions";
+import { Airplane } from "@/app/lib/definitions";
 import { getKeyValue } from "@nextui-org/react";
 import {
   Table,
@@ -17,7 +17,7 @@ export default function AirplanesTable(data: any) {
     key: string;
     label: string;
   }[] = data.columns;
-  const rows: airplane[] = data.airplanes;
+  const rows: Airplane[] = data.airplanes;
   return (
     <Table>
       <TableHeader columns={columns}>

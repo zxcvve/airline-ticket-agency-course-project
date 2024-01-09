@@ -1,6 +1,4 @@
-// TODO: Rename interfaces to PascalCase
-
-export interface user {
+export interface User {
   id: number;
   last_name: string;
   first_name: string;
@@ -13,7 +11,7 @@ export interface user {
   password: string;
 }
 
-export interface userWithoutPassword {
+export interface UserWithoutPassword {
   id: number;
   last_name: string;
   first_name: string;
@@ -25,14 +23,14 @@ export interface userWithoutPassword {
   role: string;
 }
 
-export interface airplane {
+export interface Airplane {
   id: number;
   model: string;
   reg_number: string;
   seats: number;
 }
 
-export interface flight {
+export interface Flight {
   id: number;
   flight_number: number;
   departure_time: Date;
@@ -41,21 +39,21 @@ export interface flight {
   route: number;
 }
 
-export interface route {
+export interface Route {
   id: number;
   departure_airport: number;
   arrival_airport: number;
   flight_duration: string;
 }
 
-export interface RouteInfo{
+export interface RouteInfo {
   id: number;
   departure_airport_name: string;
   arrival_airport_name: string;
   flight_duration: string;
-} 
+}
 
-export interface ticketPrice {
+export interface TicketPrice {
   id: number;
   flight: number;
   price_starts: Date;
@@ -63,7 +61,7 @@ export interface ticketPrice {
   price: number;
 }
 
-export interface ticket {
+export interface Ticket {
   id: number;
   passanger: number;
   flight: number;
@@ -71,13 +69,13 @@ export interface ticket {
   seat: string;
 }
 
-export interface airport {
+export interface Airport {
   id: number;
   title: string;
   city: string;
   country: string;
   address: string;
-  coordinates: string
+  coordinates: string;
 }
 
 export interface FlightInfo {

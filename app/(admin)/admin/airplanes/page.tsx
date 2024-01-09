@@ -1,5 +1,5 @@
 import { getAirplanes } from "@/app/lib/actions";
-import { airplane } from "@/app/lib/definitions";
+import { Airplane } from "@/app/lib/definitions";
 import { Spacer } from "@nextui-org/spacer";
 import {
   Table,
