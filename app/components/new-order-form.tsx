@@ -80,7 +80,7 @@ function Form(props: any) {
   const flight_departure_time = flight.departure_time.toLocaleTimeString();
   const flight_arrival_time = flight.arrival_time.toLocaleTimeString();
 
-  const price_number: number = Number(flight.current_price.substring(1));
+  const price_rub: number = flight.current_price / 100;
 
   const [selectedSeat, setSelectedSeat] = useState<any>();
 
@@ -113,13 +113,13 @@ function Form(props: any) {
               const res = newOrder(
                 session.userId,
                 flight.flight_id,
-                price_number,
+                flight.current_price,
                 selectedSeat,
               );
             }
           }}
         >
-          Купить {flight.current_price}
+          Купить {price_rub}₽
         </Button>
       </CardFooter>
     </Card>
