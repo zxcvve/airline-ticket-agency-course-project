@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/table";
-import Link from "next/link";
 import { ProcessedFlightInfo } from "./page";
 
 export default function FlightsTable(data: any) {
@@ -21,11 +20,13 @@ export default function FlightsTable(data: any) {
 
   function renderCell(item: any, columnKey: any) {
     return (
-      <Link href={`flights/${item.flight_id}`}>
+      // <Link href={`flights/${item.flight_id}`}>
+      <div>
         {getKeyValue(item, columnKey)}
         {/* TODO: Реализовать удаление полёта */}
         {columnKey === "actions" && <Button size="sm">Удалить</Button>}
-      </Link>
+      </div>
+      // </Link>
     );
   }
 
