@@ -156,6 +156,13 @@ export async function getUserInfo(userId: number) {
   return user[0];
 }
 
+export async function getUsersList() {
+  const user: userWithoutPassword[] = await sql`
+    SELECT * FROM "user_info_without_password" ORDER BY id
+  `;
+  return user;
+}
+
 export async function getFlightList() {
   const flights: flight[] = await sql`
     SELECT * FROM "flight"
@@ -210,7 +217,33 @@ export async function updateUserInfo(
   middle_name: string | null,
   phone: string | null,
   isMale: boolean | null,
+  email?: string | null,
+  role?: string | null,
 ) {
+  if (role) {
+    try {
+      const res = await sql`
+      UPDATE "user"
+      SET 
+        role = ${role}
+      WHERE id = ${userId}
+    `;
+      revalidateTag("userData");
+    } catch (err) {}
+  }
+
+  if(email) {
+    try {
+      const res = await sql`
+      UPDATE "user"
+      SET 
+        email = ${email}
+      WHERE id = ${userId}
+    `;
+      revalidateTag("userData");
+    } catch (err) {}
+  }
+
   try {
     const res = await sql`
     UPDATE "user"
@@ -238,7 +271,7 @@ export async function getUsers() {
 
 export async function getAirplanes() {
   const airplanes: airplane[] = await sql`
-    SELECT * FROM "airplane"
+    SELECT * FROM "airplane" ORDER BY id
   `;
   return airplanes;
 }
@@ -272,7 +305,7 @@ export async function updateAirplaneInfo(
 
 export async function getAirports() {
   const airports: airport[] = await sql`
-    SELECT * FROM "airport"
+    SELECT * FROM "airport" ORDER BY id
   `;
   return airports;
 }
