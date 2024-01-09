@@ -19,7 +19,7 @@ import {
   route,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 async function validateCredentials(email: string, password: string) {
   const credentialsValid = z
@@ -250,8 +250,12 @@ export async function getAirplaneInfo(id: number) {
   return airplanes[0];
 }
 
-export async function updateAirplaneInfo(id: number, model: string, reg_number: string){
-try {
+export async function updateAirplaneInfo(
+  id: number,
+  model: string,
+  reg_number: string,
+) {
+  try {
     const res = await sql`
       UPDATE "airplane"
       SET 
@@ -259,18 +263,51 @@ try {
         reg_number = ${reg_number}
       WHERE id = ${id}
     `;
+    revalidatePath("/admin/airplanes");
     return "Успешно обновлено";
-} catch (error) {
-  return "Произошла ошибка";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
 }
-}
-
 
 export async function getAirports() {
   const airports: airport[] = await sql`
     SELECT * FROM "airport"
   `;
   return airports;
+}
+
+export async function getAirportInfo(id: number) {
+  const airports: airport[] = await sql`
+    SELECT * FROM "airport" WHERE id = ${id}
+  `;
+  return airports[0];
+}
+
+export async function updateAirportInfo(
+  id: number,
+  title: string,
+  city: string,
+  country: string,
+  address: string,
+  coordinates: string,
+) {
+  try {
+    const res = await sql`
+        UPDATE "airport"
+        SET 
+          title = ${title},
+          city = ${city},
+          country = ${country},
+          address = ${address},
+          coordinates = ${coordinates}
+        WHERE id = ${id}
+      `;
+    revalidatePath("/admin/airports");
+    return "Успешно обновлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
 }
 
 export async function getFlights() {
