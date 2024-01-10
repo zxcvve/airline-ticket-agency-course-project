@@ -18,6 +18,7 @@ import {
   Airport,
   Route,
   RouteInfo,
+  TicketPriceToAdd,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -403,6 +404,24 @@ export async function updateRouteInfo(
       `;
     revalidatePath("/admin/routes");
     return "Успешно обновлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
+}
+
+export async function insertFlightWithPrice(
+  flight_number: string,
+  departure_time: Date,
+  airplane_id: number,
+  route_id: number,
+  minimal_price: TicketPriceToAdd,
+) {
+  try {
+    const res = await sql.begin((sql) => [
+      sql`CALL add_flight_and_price(${flight_number}, ${departure_time}, ${airplane_id}, ${route_id}, '30 days', ${minimal_price.base_price})`,
+    ]);
+    revalidatePath("/admin/flights");
+    return "Успешно добавлено";
   } catch (error) {
     return "Произошла ошибка";
   }
