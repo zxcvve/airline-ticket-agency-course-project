@@ -1,6 +1,7 @@
 import { getFlightInfoList } from "@/app/lib/actions";
 import FlightsTable from "./flights-table";
 import { FlightInfo } from "@/app/lib/definitions";
+import { Button, Link } from "@nextui-org/react";
 
 type FlightInfoWithDatesOmitted = Omit<
   FlightInfo,
@@ -18,6 +19,7 @@ export default async function FlightList() {
   flights.map((flight: ProcessedFlightInfo) => {
     flight.arrival_time = new Date(flight.arrival_time).toLocaleString();
     flight.departure_time = new Date(flight.departure_time).toLocaleString();
+    flight.current_price = flight.current_price / 100;
   });
 
   const tableColumns = [
@@ -63,15 +65,18 @@ export default async function FlightList() {
       label: "Цена",
     },
     {
-      key:"actions",
-      label: "Действия"
-    }
+      key: "actions",
+      label: "Действия",
+    },
   ];
 
   return (
     <div>
       <h1>Список рейсов</h1>
       <FlightsTable flights={flights} columns={tableColumns} />
+      <Link href="flights/add">
+        <Button>Добавить</Button>
+      </Link>
     </div>
   );
 }
