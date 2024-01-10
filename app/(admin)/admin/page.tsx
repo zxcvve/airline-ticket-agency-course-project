@@ -6,7 +6,7 @@ export default function AdminPage() {
       <ul className="flex flex-col">
         <Link href="admin/users">Пользователи</Link>
         <Link href="admin/routes">Маршруты</Link>
-        <Link href="admin/flights">Полёты</Link>
+        <Link href="admin/flights">Рейсы</Link>
         <Link href="admin/airports">Аэропорты</Link>
         <Link href="admin/airplanes">Самолёты</Link>
         <Link href="admin/tickets">Билеты</Link>
