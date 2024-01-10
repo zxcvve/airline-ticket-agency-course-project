@@ -253,13 +253,32 @@ JOIN
 JOIN 
   "airport" arr ON r."arrival_airport" = arr."id";
 
-CREATE PROCEDURE insert_flight(
-  p_flight_number INT, 
+-- CREATE PROCEDURE insert_flight(
+--   p_flight_number INT, 
+--   p_departure_time TIMESTAMPTZ, 
+--   p_airplane INT, 
+--   p_route INT
+-- ) LANGUAGE plpgsql AS $$
+-- DECLARE
+--   v_flight_duration INTERVAL;
+--   v_arrival_time TIMESTAMPTZ;
+-- BEGIN
+--   SELECT flight_duration INTO v_flight_duration FROM route WHERE id = p_route;
+
+--   v_arrival_time := p_departure_time + v_flight_duration;
+
+--   INSERT INTO flight (flight_number, departure_time, arrival_time, airplane, route)
+--   VALUES (p_flight_number, p_departure_time, v_arrival_time, p_airplane, p_route);
+-- END $$;
+
+CREATE FUNCTION add_flight(
+  p_flight_number TEXT, 
   p_departure_time TIMESTAMPTZ, 
   p_airplane INT, 
   p_route INT
-) LANGUAGE plpgsql AS $$
+) RETURNS INT AS $$
 DECLARE
+  v_flight_id INT;
   v_flight_duration INTERVAL;
   v_arrival_time TIMESTAMPTZ;
 BEGIN
@@ -268,5 +287,38 @@ BEGIN
   v_arrival_time := p_departure_time + v_flight_duration;
 
   INSERT INTO flight (flight_number, departure_time, arrival_time, airplane, route)
-  VALUES (p_flight_number, p_departure_time, v_arrival_time, p_airplane, p_route);
+  VALUES (p_flight_number, p_departure_time, v_arrival_time, p_airplane, p_route)
+  RETURNING id INTO v_flight_id;
+
+  RETURN v_flight_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE PROCEDURE add_price(
+  p_flight_id INT, 
+  p_time_left_threshold INTERVAL, 
+  p_base_price BIGINT
+) LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO price (flight_id, time_left_threshold, base_price)
+  VALUES (p_flight_id, p_time_left_threshold, p_base_price);
+END $$;
+
+CREATE PROCEDURE add_flight_and_price(
+  p_flight_number INT, 
+  p_departure_time TIMESTAMPTZ, 
+  p_airplane_id INT, 
+  p_route_id INT, 
+  p_time_left_threshold INTERVAL, 
+  p_base_price BIGINT
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  v_flight_id INT;
+BEGIN
+  SELECT add_flight(p_flight_number, p_departure_time, p_airplane_id, p_route_id) INTO v_flight_id;
+  CALL add_price(v_flight_id, p_time_left_threshold, p_base_price);
+EXCEPTION WHEN others THEN
+  RAISE;
 END $$;
