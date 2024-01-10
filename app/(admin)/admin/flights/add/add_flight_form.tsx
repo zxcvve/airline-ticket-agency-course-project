@@ -12,7 +12,7 @@ import {
   Autocomplete,
   AutocompleteItem,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Airport,
   Airplane,
@@ -120,6 +120,23 @@ export default function AddFlightForm({
     setFormState(res);
   }
 
+  function validateTime(time: string) {
+    const hours: number = Number(time.split(":")[0]);
+    const minutes: number = Number(time.split(":")[1]);
+
+    if (hours < 0 || hours > 23) {
+      return true;
+    }
+    if (minutes < 0 || minutes > 59) {
+      return true;
+    }
+  }
+
+  const timeIsInvalid = useMemo(
+    () => validateTime(departureTime),
+    [departureTime],
+  );
+
   return (
     <>
       <form className="flex flex-col gap-4" onSubmit={handleFormSubmission}>
@@ -143,6 +160,7 @@ export default function AddFlightForm({
           placeholder="ЧЧ:ММ"
           label="Время вылета"
           value={departureTime}
+          isInvalid={timeIsInvalid}
           onValueChange={setDepartureTime}
         />
         <Input
@@ -167,8 +185,10 @@ export default function AddFlightForm({
         />
         <Input
           label="Минимальная цена"
-          value={String(minimialPrice)}
-          onValueChange={(text) => setMinimalPrice(Number(text))}
+          value={minimialPrice ? String(minimialPrice) : ""}
+          onValueChange={(text) => {
+            setMinimalPrice(Number(text));
+          }}
         />
 
         <Button type="submit">Добавить</Button>
