@@ -22,7 +22,7 @@ export default function LoginForm() {
               type="email"
               id="email"
               name="email"
-              placeholder="Логин"
+              label="Email"
             />
 
             <Input
@@ -30,7 +30,7 @@ export default function LoginForm() {
               type="password"
               id="password"
               name="password"
-              placeholder="Пароль"
+              label="Пароль"
             />
             <Button className="" type="submit">
               Войти
