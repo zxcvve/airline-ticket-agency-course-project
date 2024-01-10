@@ -5,13 +5,13 @@ import { Divider } from "@nextui-org/divider";
 import { Link } from "@nextui-org/link";
 
 export default function FlightItem(flight: FlightInfo) {
-  const flight_departure_date = flight.departure_time.toLocaleDateString();
-  const flight_arrival_date = flight.arrival_time.toLocaleDateString();
+  const flight_departure_date = flight.departure_time?.toLocaleDateString();
+  const flight_arrival_date = flight.arrival_time?.toLocaleDateString();
 
-  const flight_departure_time = flight.departure_time.toLocaleTimeString();
-  const flight_arrival_time = flight.arrival_time.toLocaleTimeString();
+  const flight_departure_time = flight.departure_time?.toLocaleTimeString();
+  const flight_arrival_time = flight.arrival_time?.toLocaleTimeString();
 
-  const flight_price_rub = flight.current_price /100;
+  const flight_price_rub = flight?.current_price /100;
 
   return (
     <Card className="" isHoverable={true}>
