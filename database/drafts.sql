@@ -142,3 +142,14 @@ EXECUTE FUNCTION mark_seat_as_taken();
 
 
 ALTER TABLE "ticket" ADD CONSTRAINT "unique_seat_per_flight" UNIQUE ("flight", "seat");
+
+
+DO $$
+BEGIN
+  UPDATE flight
+  SET arrival_time = departure_time + (
+    SELECT flight_duration 
+    FROM route 
+    WHERE id = flight.route
+  );
+END $$;
