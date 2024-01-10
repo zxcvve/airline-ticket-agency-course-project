@@ -32,7 +32,7 @@ export interface Airplane {
 
 export interface Flight {
   id: number;
-  flight_number: number;
+  flight_number: string;
   departure_time: Date;
   arrival_time: Date;
   airplane: number;
@@ -53,13 +53,21 @@ export interface RouteInfo {
   flight_duration: string;
 }
 
-export interface TicketPrice {
-  id: number;
-  flight: number;
-  price_starts: Date;
-  price_ends: Date;
-  price: number;
+// export interface TicketPrice {
+//   id: number;
+//   flight: number;
+//   price_starts: Date;
+//   price_ends: Date;
+//   price: number;
+// }
+export interface TicketPrice{
+  id: number,
+  flight_id: number
+  time_left_threshold: string;
+  base_price: number;
 }
+
+export interface TicketPriceToAdd extends Omit<TicketPrice, 'id' | 'flight_id'> {}
 
 export interface Ticket {
   id: number;
