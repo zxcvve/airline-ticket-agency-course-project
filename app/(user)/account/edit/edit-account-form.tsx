@@ -139,6 +139,7 @@ export default function EditUserInfoForm({
         fun={setGender}
         selectedKey={gender}
         label="Пол"
+        name=""
       />
 
       <Button type="submit">Сохранить</Button>
