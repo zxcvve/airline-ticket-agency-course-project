@@ -28,6 +28,7 @@ export interface Airplane {
   model: string;
   reg_number: string;
   seats: number;
+  isenabled: boolean;
 }
 
 export interface Flight {
