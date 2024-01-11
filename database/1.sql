@@ -33,7 +33,8 @@ CREATE TABLE "route" (
   "id" serial PRIMARY KEY,
   "departure_airport" int,
   "arrival_airport" int,
-  "flight_duration" interval
+  "flight_duration" interval,
+  "isenabled" BOOLEAN DEFAULT TRUE
 );
 
 -- CREATE TABLE "ticket_price" (
@@ -248,7 +249,8 @@ SELECT
   r."id",
   dep."title" AS "departure_airport_name",
   arr."title" AS "arrival_airport_name",
-  r."flight_duration"
+  r."flight_duration",
+  r."isenabled"
 FROM 
   "route" r
 JOIN 

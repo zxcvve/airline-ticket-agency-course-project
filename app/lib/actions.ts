@@ -428,6 +428,12 @@ export async function getRoutes() {
   `;
   return routes;
 }
+export async function getEnabledRoutes() {
+  const routes: RouteInfo[] = await sql`
+    SELECT * FROM "route_info" WHERE isenabled = true ORDER BY id
+  `;
+  return routes;
+}
 
 export async function getRoute(id: number) {
   const routes: Route[] = await sql`

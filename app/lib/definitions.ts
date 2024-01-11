@@ -45,6 +45,7 @@ export interface Route {
   departure_airport: number;
   arrival_airport: number;
   flight_duration: string;
+  isenabled: boolean
 }
 
 export interface RouteInfo {
@@ -52,6 +53,7 @@ export interface RouteInfo {
   departure_airport_name: string;
   arrival_airport_name: string;
   flight_duration: string;
+  isenabled: boolean
 }
 
 // export interface TicketPrice {
