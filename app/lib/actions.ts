@@ -19,6 +19,7 @@ import {
   Route,
   RouteInfo,
   TicketPriceToAdd,
+  Price,
 } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -408,12 +409,12 @@ export async function getFlights() {
   return flights;
 }
 
-// export async function getPrices(){
-//   const prices: TicketInfo[] = await sql`
-//     SELECT * FROM "ticket_info"
-//   `;
-//   return prices;
-// }
+export async function getPrices(){
+  const prices: Price[] = await sql`
+    SELECT * FROM "price"
+  `;
+  return prices;
+}
 
 export async function getTickets() {
   const tickets: TicketInfo[] = await sql`
