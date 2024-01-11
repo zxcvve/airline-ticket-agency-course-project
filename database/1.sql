@@ -5,7 +5,7 @@ CREATE TABLE "user" (
   "first_name" text,
   "middle_name" text,
   "birthdate" date,
-  "ismale": BOOLEAN,
+  "ismale" BOOLEAN,
   "phone_number" text,
   "email" text unique,
   "role" text DEFAULT 'User'
@@ -24,7 +24,8 @@ CREATE TABLE "flight" (
   "departure_time" timestamptz,
   "arrival_time" timestamptz,
   "airplane" int,
-  "route" int
+  "route" int,
+  "isEnabled" BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE "route" (
@@ -144,6 +145,7 @@ SELECT
   f.flight_number,
   f.departure_time,
   f.arrival_time,
+  f."isEnabled",
   a.model AS airplane_model, 
   a.reg_number AS airplane_reg_number, 
   dep.title AS departure_airport, 
