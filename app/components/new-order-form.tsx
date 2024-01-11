@@ -38,8 +38,8 @@ function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
     >
       {(seat) => (
         <AutocompleteItem
-          key={seat.seat_id}
-          value={seat.seat_id}
+          key={seat.seat_number}
+          value={seat.seat_number}
           textValue={String(seat.seat_number)}
         >
           {seat.seat_number}
