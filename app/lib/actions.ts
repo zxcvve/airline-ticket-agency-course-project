@@ -179,6 +179,13 @@ export async function getFlightInfoList() {
   return flights;
 }
 
+export async function getAvailableFlightsInfoList(){
+  const flights: FlightInfo[] = await sql`
+    SELECT * FROM "flight_info" WHERE "isEnabled" = true AND departure_time > NOW()
+  `;
+  return flights;
+}
+
 export async function getFlightInfo(id: number) {
   const flights: FlightInfo[] = await sql`
     SELECT * FROM "flight_info" WHERE flight_id = ${id}
