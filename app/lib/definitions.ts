@@ -130,3 +130,10 @@ export interface Seat {
   is_occupied: boolean;
   passenger_id: number;
 }
+
+export interface Price{
+  id: number,
+  flight_id: number,
+  time_left_threshold: string,
+  base_price: number
+}
