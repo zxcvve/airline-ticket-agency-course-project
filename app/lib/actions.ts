@@ -151,6 +151,13 @@ export async function getUserOrders(userId: number) {
   return orders;
 }
 
+export async function getTicketInfo(ticketId: number) {
+  const ticket: TicketInfo[] = await sql`
+    SELECT * FROM "user_tickets" WHERE ticket_id = ${ticketId}
+  `;
+  return ticket[0];
+}
+
 export async function getUserInfo(userId: number) {
   const user: UserWithoutPassword[] = await sql`
     SELECT * FROM "user_info_without_password" WHERE id = ${userId}
@@ -415,12 +422,6 @@ export async function getTickets() {
   return tickets;
 }
 
-export async function getTicketInfo(id: number) {
-  const tickets: TicketInfo[] = await sql`
-    SELECT * FROM "ticket_info" WHERE ticket_id = ${id}
-  `;
-  return tickets[0];
-}
 
 export async function getRoutes() {
   const routes: RouteInfo[] = await sql`
@@ -486,7 +487,6 @@ export async function toggleRoute(id: number, current_state: boolean) {
   revalidatePath("/admin/routes");
   return flights;
 }
-
 
 export async function insertFlightWithPrice(
   flight_number: string,
