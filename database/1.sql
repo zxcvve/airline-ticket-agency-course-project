@@ -15,7 +15,8 @@ CREATE TABLE "airplane" (
   "id" serial PRIMARY KEY,
   "model" text,
   "reg_number" text,
-  "seats" int
+  "seats" int,
+  "isenabled" BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE "flight" (
