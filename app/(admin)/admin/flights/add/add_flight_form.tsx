@@ -106,7 +106,7 @@ export default function AddFlightForm({
 
     const price: TicketPriceToAdd = {
       time_left_threshold: "30 days",
-      base_price: minimialPrice,
+      base_price: minimialPrice * 100, // multiply price by 100 to convert it to rubles
     };
 
     const res = await insertFlightWithPrice(
