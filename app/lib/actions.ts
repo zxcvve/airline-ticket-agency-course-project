@@ -409,6 +409,21 @@ export async function updateRouteInfo(
   }
 }
 
+export async function insertRoute(
+  departure_airport: number,
+  arrival_airport: number,
+  flight_duration: string,
+) {
+  try {
+    const res = await sql`
+      INSERT INTO "route" (departure_airport, arrival_airport, flight_duration) VALUES (${departure_airport}, ${arrival_airport}, ${flight_duration})`;
+    revalidatePath("/admin/routes");
+    return "Успешно добавлено";
+  } catch (err) {
+    return "Произошла ошибка";
+  }
+}
+
 export async function insertFlightWithPrice(
   flight_number: string,
   departure_time: Date,
