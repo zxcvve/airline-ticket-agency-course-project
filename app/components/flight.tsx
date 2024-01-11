@@ -25,15 +25,10 @@ export default function FlightItem(flight: FlightInfo) {
           {flight.arrival_airport} <br />
           {flight_arrival_date} {flight_arrival_time}
         </p>
-        <Link href={`/new-order/${flight.flight_id}`}>
-          <Button>Купить {flight_price_rub}₽</Button>
+        <Link className="justify-end" href={`/new-order/${flight.flight_id}`}>
+          <Button className="w-28">Купить {flight_price_rub}₽</Button>
         </Link>
       </CardBody>
-      {/* <CardFooter className="justify-center">
-        <Link href={`/new-order/${flight.flight_id}`}>
-          <Button>Купить {flight.current_price}</Button>
-        </Link>
-      </CardFooter> */}
     </Card>
   );
 }
