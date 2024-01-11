@@ -83,7 +83,6 @@ export default function AddFlightForm({
   data,
 }: {
   data: {
-    airports: Airport[];
     airplanes: Airplane[];
     routes: RouteInfo[];
   };
