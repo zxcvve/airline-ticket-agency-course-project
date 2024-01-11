@@ -1,5 +1,6 @@
 import { getAirports } from "@/app/lib/actions";
 import AirportsTable from "./airports-table";
+import { Button, Link } from "@nextui-org/react";
 
 export default async function AirportList() {
   const airports = await getAirports();
@@ -36,6 +37,9 @@ export default async function AirportList() {
     <div>
       <h1>Список аэропортов</h1>
       <AirportsTable airports={airports} columns={tableColumns} />
+      <Link href="airports/add">
+        <Button>Добавить</Button>
+      </Link>
     </div>
   );
 }

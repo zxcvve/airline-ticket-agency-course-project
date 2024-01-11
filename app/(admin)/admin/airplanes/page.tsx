@@ -10,6 +10,7 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import AirplanesTable from "./airplanes-table";
+import { Button, Link } from "@nextui-org/react";
 
 export default async function AirplaneList() {
   const airplanes = await getAirplanes();
@@ -44,6 +45,9 @@ export default async function AirplaneList() {
     <div>
       <h1>Список самолетов</h1>
       <AirplanesTable airplanes={airplanes} columns={tableColumns} />
+      <Link href="airplanes/add">
+        <Button>Добавить</Button>
+      </Link>
     </div>
   );
 }
