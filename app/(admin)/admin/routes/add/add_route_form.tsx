@@ -55,7 +55,7 @@ export default function AddRouteForm({ airports }: { airports: Airport[] }) {
   }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleFormSubmission}>
+    <form className="flex flex-col gap-2" onSubmit={handleFormSubmission}>
       <p className="text-center">Добавить рейс</p>
       <AirportAutocomplete
         airports={airports}
