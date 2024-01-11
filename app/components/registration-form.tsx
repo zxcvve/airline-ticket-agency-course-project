@@ -35,7 +35,7 @@ export default function RegistrationForm() {
               label="Пароль"
             />
             <Button className="" type="submit">
-              Войти
+              Регистрация
             </Button>
             <div
               className="flex h-8 items-end space-x-1"
@@ -44,7 +44,7 @@ export default function RegistrationForm() {
             >
               {formState && (
                 <>
-                  <p className="text-sm text-danger-500">{formState}</p>
+                  <p data-testid="form-result" className="text-sm text-danger-500">{formState}</p>
                 </>
               )}
             </div>
