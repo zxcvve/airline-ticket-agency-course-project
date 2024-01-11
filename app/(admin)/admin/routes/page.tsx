@@ -22,6 +22,14 @@ export default async function RouteList() {
       key: "flight_duration",
       label: "Время в пути",
     },
+    {
+      key: "isenabled",
+      label: "Включен",
+    },
+    {
+      key: "actions",
+      label: "Действия",
+    },
   ];
 
   return (

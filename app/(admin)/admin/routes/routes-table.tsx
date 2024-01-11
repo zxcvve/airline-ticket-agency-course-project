@@ -1,7 +1,8 @@
 "use client";
 
+import { toggleRoute } from "@/app/lib/actions";
 import { RouteInfo } from "@/app/lib/definitions";
-import { getKeyValue } from "@nextui-org/react";
+import { Button, getKeyValue } from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -18,6 +19,26 @@ export default function RoutesTable(data: any) {
     label: string;
   }[] = data.columns;
   const rows: RouteInfo[] = data.routes;
+
+  function renderCell(item: RouteInfo, columnKey: any) {
+    return (
+      <div>
+        <Link href={`routes/${item.id}`}>
+          {getKeyValue(item, columnKey)}
+        </Link>
+        {columnKey === "isenabled" && <p>{item.isenabled ? "✔️" : "❌"}</p>}
+        {columnKey === "actions" && (
+          <Button
+            size="sm"
+            onPress={() => toggleRoute(item.id, item.isenabled)}
+          >
+            Вкл / Выкл
+          </Button>
+        )}
+      </div>
+    );
+  }
+
   return (
     <Table>
       <TableHeader columns={columns}>
@@ -28,11 +49,7 @@ export default function RoutesTable(data: any) {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>
-                <Link href={`routes/${item.id}`}>
-                  {getKeyValue(item, columnKey)}
-                </Link>
-              </TableCell>
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}

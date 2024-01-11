@@ -479,6 +479,15 @@ export async function insertRoute(
   }
 }
 
+export async function toggleRoute(id: number, current_state: boolean) {
+  const flights: RouteInfo[] = await sql`
+    UPDATE "route" SET "isenabled" = ${!current_state} WHERE id = ${id}
+  `;
+  revalidatePath("/admin/routes");
+  return flights;
+}
+
+
 export async function insertFlightWithPrice(
   flight_number: string,
   departure_time: Date,
