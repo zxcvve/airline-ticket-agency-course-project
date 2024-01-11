@@ -1,10 +1,13 @@
-import { getAirplanes, getAirports, getEnabledAirplanes, getRoutes } from "@/app/lib/actions";
+import {
+  getEnabledAirplanes,
+  getEnabledRoutes
+} from "@/app/lib/actions";
+import { Airplane, RouteInfo } from "@/app/lib/definitions";
 import AddFlightForm from "./add_flight_form";
-import { Airplane, Airport, RouteInfo } from "@/app/lib/definitions";
 
 export default async function AddFlightPage() {
   const airplanes: Airplane[] = await getEnabledAirplanes();
-  const routes: RouteInfo[] = await getRoutes();
+  const routes: RouteInfo[] = await getEnabledRoutes();
   const data = {
     airplanes,
     routes,
