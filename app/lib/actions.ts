@@ -179,14 +179,14 @@ export async function getFlightInfoList() {
   return flights;
 }
 
-export async function getAvailableFlightsInfoList(){
+export async function getAvailableFlightsInfoList() {
   const flights: FlightInfo[] = await sql`
     SELECT * FROM "flight_info" WHERE "isEnabled" = true AND departure_time > NOW() ORDER BY departure_time
   `;
   return flights;
 }
 
-export async function toggleFlight(id: number,current_state: boolean){
+export async function toggleFlight(id: number, current_state: boolean) {
   const flights: FlightInfo[] = await sql`
     UPDATE "flight" SET "isEnabled" = ${!current_state} WHERE id = ${id}
   `;
@@ -315,6 +315,22 @@ export async function updateAirplaneInfo(
     `;
     revalidatePath("/admin/airplanes");
     return "Успешно обновлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
+}
+
+export async function addAirplane(
+  model: string,
+  reg_number: string,
+  seats: number,
+) {
+  try {
+    const res = await sql`
+      INSERT INTO "airplane" (model, reg_number, seats) VALUES (${model}, ${reg_number}, ${seats})
+    `;
+    revalidatePath("/admin/airplanes");
+    return "Успешно добавлено";
   } catch (error) {
     return "Произошла ошибка";
   }
