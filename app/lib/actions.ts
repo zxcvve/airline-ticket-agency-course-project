@@ -505,3 +505,21 @@ export async function insertFlightWithPrice(
     return "Произошла ошибка";
   }
 }
+
+export async function addAirport(
+  title: string,
+  city: string,
+  country: string,
+  address: string,
+  coordinates: string,
+) {
+  try {
+    const res = await sql`
+      INSERT INTO "airport" (title, city, country, address, coordinates) VALUES (${title}, ${city}, ${country}, ${address}, ${coordinates})
+    `;
+    revalidatePath("/admin/airports");
+    return "Успешно добавлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
+}
