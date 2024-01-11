@@ -52,6 +52,7 @@ CREATE TABLE "ticket" (
   "price" bigint,
   "seat" int,
   "purchase_date" TIMESTAMPTZ DEFAULT NOW();
+  FOREIGN KEY (seat) REFERENCES (seats.seat_id)
 );
 
 CREATE TABLE "airport" (
@@ -98,7 +99,7 @@ ALTER TABLE "route" ADD FOREIGN KEY ("departure_airport") REFERENCES "airport" (
 
 ALTER TABLE "route" ADD FOREIGN KEY ("arrival_airport") REFERENCES "airport" ("id");
 
-ALTER TABLE "ticket" ADD CONSTRAINT "unique_seat_per_flight" UNIQUE ("flight", "seat");
+ALTER TABLE "ticket" ADD CONSTRAINT "unique_seat_per_flight" UNIQUE ("flight_id", "seat_number");
 
 CREATE VIEW "route_with_airport_names" AS
 SELECT 

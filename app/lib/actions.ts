@@ -147,7 +147,7 @@ export async function clearIronSession() {
 
 export async function getUserOrders(userId: number) {
   const orders: TicketInfo[] = await sql`
-    SELECT * FROM "user_tickets" WHERE user_id = ${userId} ORDER BY purchasedate DESC
+    SELECT * FROM "user_tickets" WHERE user_id = ${userId} ORDER BY purchase_date DESC
   `;
   return orders;
 }
@@ -213,10 +213,10 @@ export async function newOrder(
   passenger: number,
   flight: number,
   price: number,
-  seat: number,
+  seat_id: number,
 ) {
   const flights: FlightInfo[] = await sql`
-    INSERT INTO "ticket" (passenger, flight, price, seat) VALUES (${passenger}, ${flight}, ${price}, ${seat})
+    INSERT INTO "ticket" (passenger, flight, price, seat) VALUES (${passenger}, ${flight}, ${price}, ${seat_id})
   `;
   return redirect("/orders");
 }
