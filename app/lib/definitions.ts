@@ -107,6 +107,7 @@ export interface FlightInfo {
 export interface TicketInfo {
   user_id: number;
   first_name: string;
+  middle_name: string;
   last_name: string;
   ticket_id: number;
   ticket_price: number;
@@ -118,6 +119,8 @@ export interface TicketInfo {
   departure_time: Date;
   arrival_time: Date;
   purchase_date: Date;
+  departure_city: string;
+  arrival_city: string;
 }
 
 export interface Seat {
