@@ -146,7 +146,7 @@ export async function clearIronSession() {
 
 export async function getUserOrders(userId: number) {
   const orders: TicketInfo[] = await sql`
-    SELECT * FROM "user_tickets" WHERE user_id = ${userId}
+    SELECT * FROM "user_tickets" WHERE user_id = ${userId} ORDER BY departure_time DESC
   `;
   return orders;
 }
@@ -174,15 +174,23 @@ export async function getFlightList() {
 
 export async function getFlightInfoList() {
   const flights: FlightInfo[] = await sql`
-    SELECT * FROM "flight_info"
+    SELECT * FROM "flight_info" ORDER BY flight_id
   `;
   return flights;
 }
 
 export async function getAvailableFlightsInfoList(){
   const flights: FlightInfo[] = await sql`
-    SELECT * FROM "flight_info" WHERE "isEnabled" = true AND departure_time > NOW()
+    SELECT * FROM "flight_info" WHERE "isEnabled" = true AND departure_time > NOW() ORDER BY departure_time
   `;
+  return flights;
+}
+
+export async function toggleFlight(id: number,current_state: boolean){
+  const flights: FlightInfo[] = await sql`
+    UPDATE "flight" SET "isEnabled" = ${!current_state} WHERE id = ${id}
+  `;
+  revalidatePath("/admin/flights");
   return flights;
 }
 
