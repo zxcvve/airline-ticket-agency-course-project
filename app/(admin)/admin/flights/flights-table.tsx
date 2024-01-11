@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, getKeyValue } from "@nextui-org/react";
+import { Button, Chip, Link, getKeyValue } from "@nextui-org/react";
 import {
   Table,
   TableBody,
@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@nextui-org/table";
 import { ProcessedFlightInfo } from "./page";
+import {  toggleFlight } from "@/app/lib/actions";
 
 export default function FlightsTable(data: any) {
   const columns: {
@@ -20,13 +21,17 @@ export default function FlightsTable(data: any) {
 
   function renderCell(item: any, columnKey: any) {
     return (
-      // <Link href={`flights/${item.flight_id}`}>
       <div>
         {getKeyValue(item, columnKey)}
-        {/* TODO: Реализовать удаление полёта */}
-        {columnKey === "actions" && <Button size="sm">Удалить</Button>}
+        {columnKey === "isenabled" && (
+          <p>{item.isEnabled ? "✔️" : "❌"}</p>
+        )}
+        {columnKey === "actions" && (
+          <Button size="sm" onPress={() => toggleFlight(item.flight_id, item.isEnabled)}>
+            Вкл / Выкл
+          </Button>
+        )}
       </div>
-      // </Link>
     );
   }
 

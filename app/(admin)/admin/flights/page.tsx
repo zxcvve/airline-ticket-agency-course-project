@@ -65,6 +65,10 @@ export default async function FlightList() {
       label: "Цена",
     },
     {
+      key: "isenabled",
+      label: "Включен",
+    },
+    {
       key: "actions",
       label: "Действия",
     },
