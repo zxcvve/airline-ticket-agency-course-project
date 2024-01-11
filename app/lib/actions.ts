@@ -293,6 +293,13 @@ export async function getAirplanes() {
   return airplanes;
 }
 
+export async function getEnabledAirplanes() {
+  const airplanes: Airplane[] = await sql`
+    SELECT * FROM "airplane" WHERE isenabled = TRUE ORDER BY id
+  `;
+  return airplanes;
+}
+
 export async function getAirplaneInfo(id: number) {
   const airplanes: Airplane[] = await sql`
     SELECT * FROM "airplane" WHERE id = ${id}
@@ -334,6 +341,17 @@ export async function addAirplane(
   } catch (error) {
     return "Произошла ошибка";
   }
+}
+
+export async function toggleAirplane(id: number, current_state: boolean) {
+  // if (current_state === undefined) {
+  //   current_state = false;
+  // }
+  const airplane: Airplane[] = await sql`
+    UPDATE "airplane" SET "isenabled" = ${!current_state} WHERE id = ${id}
+  `;
+  revalidatePath("/admin/airplanes");
+  return airplane;
 }
 
 export async function getAirports() {
