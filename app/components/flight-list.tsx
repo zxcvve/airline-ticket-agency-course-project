@@ -1,11 +1,11 @@
 "use server";
 
-import { getFlightInfoList } from "../lib/actions";
+import { getAvailableFlightsInfoList, getFlightInfoList } from "../lib/actions";
 import { FlightInfo } from "../lib/definitions";
 import FlightItem from "./flight";
 
 export default async function FlightList() {
-  const flights = await getFlightInfoList();
+  const flights = await getAvailableFlightsInfoList();
 
   return (
     <div>
