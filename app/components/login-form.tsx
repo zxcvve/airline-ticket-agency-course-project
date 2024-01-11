@@ -42,7 +42,7 @@ export default function LoginForm() {
             >
               {formState && (
                 <>
-                  <p className="text-sm text-danger-500">{formState}</p>
+                  <p data-testid="form-result" className="text-sm text-danger-500">{formState}</p>
                 </>
               )}
             </div>
