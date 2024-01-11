@@ -97,6 +97,7 @@ export interface FlightInfo {
   arrival_airport: string;
   flight_duration: number;
   current_price: number;
+  isEnabled: boolean
 }
 
 export interface TicketInfo {
