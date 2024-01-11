@@ -34,6 +34,7 @@ function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
       defaultItems={seats}
       onSelectionChange={onSeatSelect}
       value={seat}
+      className="w-8/12"
     >
       {(seat) => (
         <AutocompleteItem
@@ -80,10 +81,12 @@ function Form(props: any) {
   const flight: FlightInfo = props.flight;
   const session: SessionData = props.session;
 
-  const flight_departure_date = flight.departure_time.toLocaleDateString();
-  const flight_arrival_date = flight.arrival_time.toLocaleDateString();
-  const flight_departure_time = flight.departure_time.toLocaleTimeString();
-  const flight_arrival_time = flight.arrival_time.toLocaleTimeString();
+  const flight_departure_date =
+    flight.departure_time?.toLocaleDateString("ru-RU");
+  const flight_arrival_date = flight.arrival_time?.toLocaleDateString("ru-RU");
+  const flight_departure_time =
+    flight.departure_time?.toLocaleTimeString("ru-RU");
+  const flight_arrival_time = flight.arrival_time?.toLocaleTimeString("ru-RU");
 
   const price_rub: number = flight.current_price / 100;
 
@@ -106,7 +109,7 @@ function Form(props: any) {
           {flight_arrival_date} {flight_arrival_time}
         </p>
       </CardBody>
-      <CardFooter className="flex justify-center">
+      <CardFooter className="flex flex-row gap-4">
         <SeatSelect
           flight_id={flight.flight_id}
           seat={selectedSeat}
@@ -123,6 +126,7 @@ function Form(props: any) {
               );
             }
           }}
+          className="h-14 w-4/12"
         >
           Купить {price_rub}₽
         </Button>

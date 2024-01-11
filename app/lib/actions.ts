@@ -146,7 +146,7 @@ export async function clearIronSession() {
 
 export async function getUserOrders(userId: number) {
   const orders: TicketInfo[] = await sql`
-    SELECT * FROM "user_tickets" WHERE user_id = ${userId} ORDER BY departure_time DESC
+    SELECT * FROM "user_tickets" WHERE user_id = ${userId} ORDER BY purchasedate DESC
   `;
   return orders;
 }

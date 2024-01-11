@@ -78,6 +78,7 @@ export interface Ticket {
   flight: number;
   price: number;
   seat: string;
+  purchase_date: Date;
 }
 
 export interface Airport {
@@ -116,6 +117,7 @@ export interface TicketInfo {
   arrival_airport: string;
   departure_time: Date;
   arrival_time: Date;
+  purchase_date: Date;
 }
 
 export interface Seat {

@@ -196,7 +196,8 @@ SELECT
   dep.title AS departure_airport, 
   arr.title AS arrival_airport, 
   f.departure_time, 
-  f.arrival_time
+  f.arrival_time,
+  t.purchasedate
 FROM 
   "user" u
 JOIN 
