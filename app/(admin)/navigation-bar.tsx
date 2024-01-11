@@ -75,7 +75,7 @@ export default async function NavigationBar() {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">Жмых Airlines</p>
+        <p className="font-bold text-inherit">Крутое пике</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>

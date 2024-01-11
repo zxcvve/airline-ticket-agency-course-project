@@ -7,7 +7,7 @@ import NavigationBar from "./navigation-bar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Жмых Airlines",
+  title: "Агентство по продаже авиабилетов «Крутое пике»"
 };
 
 export default function RootLayout({
