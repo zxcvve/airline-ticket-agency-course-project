@@ -1,5 +1,6 @@
 import { getRoutes } from "@/app/lib/actions";
 import RoutesTable from "./routes-table";
+import { Button, Link } from "@nextui-org/react";
 
 export default async function RouteList() {
   const routes = await getRoutes();
@@ -27,6 +28,9 @@ export default async function RouteList() {
     <div>
       <h1>Список маршрутов</h1>
       <RoutesTable columns={tableColumns} routes={routes} />
+      <Link href="routes/add">
+        <Button>Добавить</Button>
+      </Link>
     </div>
   );
 }
