@@ -79,11 +79,11 @@ export default async function NavigationBar() {
         <NavbarItem>
           <Link href={"/"}>Главная</Link>
         </NavbarItem>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link href="/search" aria-current="page">
             Поиск
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
           <Link href="/orders" aria-current="page">
             Заказы
