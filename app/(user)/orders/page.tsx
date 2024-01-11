@@ -32,7 +32,7 @@ function Order(order: TicketInfo) {
       <Card className="m-2" isHoverable={true}>
         <CardBody className="flex flex-row ">
           <p>
-            {order.ticket_id} <br />
+            Рейс #{order.flight_number} <br />
             {order.airplane_model}
           </p>
           <Divider orientation="vertical" className="px-4" />
