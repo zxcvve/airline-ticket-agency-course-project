@@ -9,9 +9,9 @@ export default function AdminPage() {
         <Link href="admin/flights">Рейсы</Link>
         <Link href="admin/airports">Аэропорты</Link>
         <Link href="admin/airplanes">Самолёты</Link>
-        <Link href="admin/tickets">Билеты</Link>
+        {/* <Link href="admin/tickets">Билеты</Link> */}
         <Link href="admin/prices">Цены</Link>
-        <Link href="admin/seats">Места</Link>
+        {/* <Link href="admin/seats">Места</Link> */}
       </ul>
     </>
   );
