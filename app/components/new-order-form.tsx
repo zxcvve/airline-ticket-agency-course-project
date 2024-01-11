@@ -6,7 +6,12 @@ import { Button } from "@nextui-org/button";
 import { FlightInfo, Seat } from "../lib/definitions";
 import { Input } from "@nextui-org/input";
 import { redirectToLogin } from "@/app/(user)/lib/actions";
-import { Autocomplete, AutocompleteItem, Select, SelectItem } from "@nextui-org/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Select,
+  SelectItem,
+} from "@nextui-org/react";
 
 import { SessionData, defaultSession } from "@/app/lib/session";
 import { use, useEffect, useState } from "react";
@@ -16,7 +21,7 @@ function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
   const [seats, setSeats] = useState<Seat[]>([]);
 
   useEffect(() => {
-    getFreeSeats(flight_id, 50).then((seats) => {
+    getFreeSeats(flight_id).then((seats) => {
       setSeats(seats);
     });
   }, [flight_id]);
@@ -101,7 +106,7 @@ function Form(props: any) {
           {flight_arrival_date} {flight_arrival_time}
         </p>
       </CardBody>
-      <CardFooter className="justify-center">
+      <CardFooter className="flex justify-center">
         <SeatSelect
           flight_id={flight.flight_id}
           seat={selectedSeat}
