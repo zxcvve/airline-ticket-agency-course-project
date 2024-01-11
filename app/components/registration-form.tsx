@@ -22,7 +22,8 @@ export default function RegistrationForm() {
               type="email"
               id="email"
               name="email"
-              placeholder="Почта"
+              placeholder="Email"
+              label="Email"
             />
 
             <Input
@@ -31,6 +32,7 @@ export default function RegistrationForm() {
               id="password"
               name="password"
               placeholder="Пароль"
+              label="Пароль"
             />
             <Button className="" type="submit">
               Войти
