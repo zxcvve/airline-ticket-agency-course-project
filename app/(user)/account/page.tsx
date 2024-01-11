@@ -1,36 +1,43 @@
-import { SessionData, sessionOptions } from "@/app/lib/session";
-import { redirect } from "next/navigation";
-import { getIronSession } from "iron-session";
+"use server";
+
+import { UserWithoutPassword } from "@/app/lib/definitions";
+import { Link } from "@nextui-org/react";
 import { cookies } from "next/headers";
-import { Link } from "@nextui-org/link";
-import { Button } from "@nextui-org/button";
 
-async function getSession() {
-  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+export default async function AccountPage() {
+  async function getUrl() {
+    const url =
+      process.env.NODE_ENV === "production"
+        ? process.env.URL
+        : "http://localhost:3000";
+    return url;
+  }
+  const url = await getUrl();
 
-  return session;
-}
+  async function getCookie(name: string) {
+    return cookies().get(name)?.value ?? "";
+  }
+  const cookie = await getCookie("air-app-session");
 
-export default function UserInfo() {
+  const userData: UserWithoutPassword = await fetch(`${url}/api/auth/me`, {
+    headers: {
+      Cookie: `air-app-session=${cookie};`,
+    },
+    next: {
+      tags: ["userData"],
+    },
+  }).then((res) => res.json());
+
   return (
     <div>
-      <Content />
+      <h1 className="text-center">Аккаунт</h1>
+      <p>
+        ФИО: {userData.last_name} {userData.first_name} {userData.middle_name}
+      </p>
+      <p>Email: {userData.email}</p>
+      <p>Пол: {userData.ismale ? "Мужской" : "Женский"}</p>
+      <p>Номер телефона: {userData.phone_number}</p>
+      <Link href="/account/edit">Редактировать аккаунт</Link>
     </div>
   );
-}
-
-async function Content() {
-  const session = await getSession();
-  if (!session.isLoggedIn) {
-    redirect("/login");
-  } else {
-    return (
-      <>
-        <p>Hello {session.username}!</p>
-        <p>Your ID: {session.userId}</p>
-        <p>Your role: {session.role}</p>
-        <Link href="/account/edit">Редактировать информацию</Link>
-      </>
-    );
-  }
 }
