@@ -30,6 +30,14 @@ export default async function AirplaneList() {
       key: "seats",
       label: "Мест",
     },
+    {
+      key: "isenabled",
+      label: "Включен",
+    },
+    {
+      key: "actions",
+      label: "Действия",
+    },
   ];
 
   return (
