@@ -66,12 +66,12 @@ export default function AddPriceForm() {
       <Button type="submit">Добавить</Button>
       {formState && (
         <>
-          <p className="text-sm text-green-500">{formState}</p>
+          <p className="text-sm text-success-500">{formState}</p>
         </>
       )}
       {formError && (
         <>
-          <p className="text-sm text-red-500">{formError}</p>
+          <p className="text-sm text-danger-500">{formError}</p>
         </>
       )}
     </form>

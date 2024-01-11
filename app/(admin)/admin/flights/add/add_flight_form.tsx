@@ -193,7 +193,7 @@ export default function AddFlightForm({
         <Button type="submit">Добавить</Button>
         {formState && (
           <>
-            <p className="text-sm text-green-500">{formState}</p>
+            <p className="text-sm text-success-500">{formState}</p>
           </>
         )}
       </form>

@@ -96,7 +96,7 @@ export default function EditUserForm({
       <Button type="submit">Сохранить</Button>
       {formState && (
         <>
-          <p className="text-sm text-green-500">{formState}</p>
+          <p className="text-sm text-success-500">{formState}</p>
         </>
       )}
     </form>

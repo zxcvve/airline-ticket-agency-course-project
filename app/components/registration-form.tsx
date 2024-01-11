@@ -44,8 +44,7 @@ export default function RegistrationForm() {
             >
               {formState && (
                 <>
-                  {/* <ExclamationCircleIcon className="h-5 w-5 text-red-500" /> */}
-                  <p className="text-sm text-red-500">{formState}</p>
+                  <p className="text-sm text-danger-500">{formState}</p>
                 </>
               )}
             </div>
