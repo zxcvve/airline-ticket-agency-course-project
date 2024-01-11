@@ -409,7 +409,7 @@ export async function getFlights() {
   return flights;
 }
 
-export async function getPrices(){
+export async function getPrices() {
   const prices: Price[] = await sql`
     SELECT * FROM "price"
   `;
@@ -422,7 +422,6 @@ export async function getTickets() {
   `;
   return tickets;
 }
-
 
 export async function getRoutes() {
   const routes: RouteInfo[] = await sql`
@@ -519,6 +518,31 @@ export async function addAirport(
       INSERT INTO "airport" (title, city, country, address, coordinates) VALUES (${title}, ${city}, ${country}, ${address}, ${coordinates})
     `;
     revalidatePath("/admin/airports");
+    return "Успешно добавлено";
+  } catch (error) {
+    return "Произошла ошибка";
+  }
+}
+
+export async function isIntervalValid(interval: string) {
+  try {
+    const result = await sql`SELECT ${interval}::interval`;
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function addPrice(
+  flight_id: number,
+  price: number,
+  timeLeftThreshold: string,
+) {
+  try {
+    const res = await sql`
+      INSERT INTO "price" (flight_id, base_price, "time_left_threshold") VALUES (${flight_id}, ${price}, ${timeLeftThreshold})
+    `;
+    revalidatePath("/admin/prices");
     return "Успешно добавлено";
   } catch (error) {
     return "Произошла ошибка";
