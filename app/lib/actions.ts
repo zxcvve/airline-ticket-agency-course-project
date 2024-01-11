@@ -218,6 +218,7 @@ export async function newOrder(
   const flights: FlightInfo[] = await sql`
     INSERT INTO "ticket" (passenger, flight, price, seat) VALUES (${passenger}, ${flight}, ${price}, ${seat_id})
   `;
+  revalidatePath("/orders");
   return redirect("/orders");
 }
 
