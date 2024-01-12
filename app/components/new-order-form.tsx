@@ -35,12 +35,15 @@ function SeatSelect({ flight_id, seat, onSeatSelect }: any) {
       onSelectionChange={onSeatSelect}
       value={seat}
       className="w-8/12"
+      data-testid="seat-select"
+
     >
       {(seat) => (
         <AutocompleteItem
           key={seat.seat_id}
           value={seat.seat_id}
           textValue={String(seat.seat_number)}
+          data-testid="seat-select-item"
         >
           {seat.seat_number}
         </AutocompleteItem>
@@ -127,6 +130,7 @@ function Form(props: any) {
             }
           }}
           className="h-14 w-4/12"
+          data-testid="finish-order-button"
         >
           Купить {price_rub}₽
         </Button>
